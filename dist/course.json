@@ -1,0 +1,1220 @@
+{
+  "reviewed": "2026-09-21",
+  "refs": {
+    "python": [
+      "Python Tutorial",
+      "https://docs.python.org/3/tutorial/"
+    ],
+    "w3_python": [
+      "W3Schools: Python Tutorial",
+      "https://www.w3schools.com/python/"
+    ],
+    "w3_numpy": [
+      "W3Schools: NumPy Tutorial",
+      "https://www.w3schools.com/python/numpy/default.asp"
+    ],
+    "w3_pandas": [
+      "W3Schools: Pandas Tutorial",
+      "https://www.w3schools.com/python/pandas/default.asp"
+    ],
+    "w3_matplotlib": [
+      "W3Schools: Matplotlib Tutorial",
+      "https://www.w3schools.com/python/matplotlib_intro.asp"
+    ],
+    "w3_ml": [
+      "W3Schools: Machine Learning",
+      "https://www.w3schools.com/python/python_ml_getting_started.asp"
+    ],
+    "w3_trees": [
+      "W3Schools: Decision Tree",
+      "https://www.w3schools.com/python/python_ml_decision_tree.asp"
+    ],
+    "w3_knn": [
+      "W3Schools: KNN Algorithm",
+      "https://www.w3schools.com/python/python_ml_knn.asp"
+    ],
+    "w3_logistic": [
+      "W3Schools: Logistic Regression",
+      "https://www.w3schools.com/python/python_ml_logistic_regression.asp"
+    ],
+    "numpy": [
+      "NumPy Basics",
+      "https://numpy.org/doc/stable/user/absolute_beginners.html"
+    ],
+    "pandas": [
+      "10 Minutes to Pandas",
+      "https://pandas.pydata.org/docs/user_guide/10min.html"
+    ],
+    "intro": [
+      "scikit-learn: Getting Started",
+      "https://scikit-learn.org/stable/getting_started.html"
+    ],
+    "eval": [
+      "Model Selection and Evaluation",
+      "https://scikit-learn.org/stable/model_selection.html"
+    ],
+    "pitfalls": [
+      "Common Pitfalls",
+      "https://scikit-learn.org/stable/common_pitfalls.html"
+    ],
+    "linear": [
+      "Linear Models",
+      "https://scikit-learn.org/stable/modules/linear_model.html"
+    ],
+    "tree": [
+      "Decision Trees",
+      "https://scikit-learn.org/stable/modules/tree.html"
+    ],
+    "ensemble": [
+      "Ensemble Methods",
+      "https://scikit-learn.org/stable/modules/ensemble.html"
+    ],
+    "cluster": [
+      "Clustering",
+      "https://scikit-learn.org/stable/modules/clustering.html"
+    ],
+    "metrics": [
+      "Model Evaluation Metrics",
+      "https://scikit-learn.org/stable/modules/model_evaluation.html"
+    ],
+    "neural": [
+      "Google ML: Neural Networks",
+      "https://developers.google.com/machine-learning/crash-course/neural-networks"
+    ],
+    "llm": [
+      "Google ML: Language Models",
+      "https://developers.google.com/machine-learning/crash-course/llm"
+    ],
+    "embedding": [
+      "Google ML: Embeddings",
+      "https://developers.google.com/machine-learning/crash-course/embeddings"
+    ],
+    "gradient": [
+      "Google ML: Gradient Descent",
+      "https://developers.google.com/machine-learning/crash-course/linear-regression/gradient-descent"
+    ],
+    "iris": [
+      "UCI Iris Dataset",
+      "https://archive.ics.uci.edu/dataset/53/iris"
+    ],
+    "course": [
+      "Google ML Crash Course",
+      "https://developers.google.com/machine-learning/crash-course"
+    ],
+    "prompting": [
+      "Prompt Engineering Guide",
+      "https://www.promptingguide.ai/"
+    ],
+    "rag": [
+      "Pinecone: RAG Architecture",
+      "https://www.pinecone.io/learn/retrieval-augmented-generation/"
+    ],
+    "agents": [
+      "Anthropic: Building Effective Agents",
+      "https://www.anthropic.com/research/building-effective-agents"
+    ],
+    "xgboost": [
+      "XGBoost Documentation",
+      "https://xgboost.readthedocs.io/"
+    ]
+  },
+  "chapters": [
+    {
+      "id": "foundations",
+      "title": "Meet Machine Learning",
+      "track": "ML Algorithms",
+      "summary": "From hardcoded if/else rules to learning patterns from data.",
+      "sections": [
+        {
+          "title": "The Core Shift: Code vs AI",
+          "body": "Traditional computer science is fundamentally about writing rules. If you are building a system to filter out spam emails, you might write a list of explicit if-then statements: if the email contains 'winner' and 'lottery', flag it as spam. You provide the input data and the explicit rules, and the computer simply executes your logic to produce the output. In this paradigm, you are the intelligence; the computer is just a fast calculator executing your explicit instructions.\n\nMachine learning flips this paradigm completely upside down. Instead of writing the rules yourself, you provide the computer with the input data and the desired output labels—for example, millions of emails pre-marked by humans as either 'spam' or 'not spam'. The computer then runs an optimization algorithm to figure out what the rules should be.\n\nIt calculates the optimal mathematical function that correctly maps the inputs to the outputs. This means the computer is dynamically discovering its own internal logic based on the statistical patterns it finds in the data. Once this 'learning' phase is complete, you can take that discovered rule set—called a model—and use it to predict the output for entirely new, unseen inputs.",
+          "keyPoints": [
+            "Traditional programming uses inputs and rules to generate outputs.",
+            "Machine learning uses inputs and outputs to generate rules.",
+            "The generated rule set is a mathematical function known as a model."
+          ],
+          "example": "Imagine building a spam filter for Gmail. Instead of writing thousands of regex rules for keywords, Google feeds an algorithm millions of emails marked 'Spam' and 'Not Spam'. The AI learns that emails with poor grammar, crypto links, and all-caps subjects have a 99% chance of being spam, writing its own complex filtering rules.",
+          "misconception": "Common mistake: Assuming machine learning models possess human-like reasoning. In reality, they are just sophisticated pattern-matching algorithms optimizing mathematical functions.",
+          "analogy": "Think of it like learning to ride a bike. A traditional program is like reading a physics textbook on balancing. Machine learning is like actually riding the bike and falling a few times until your brain unconsciously maps out the perfect balance adjustments."
+        },
+        {
+          "title": "Features (X) and Labels (y)",
+          "body": "In machine learning terminology, data is divided into two distinct buckets: Features and Labels. Features, universally denoted by the uppercase letter 'X', are the input parameters that your model will use to make its decisions. These are the variables you will actually have access to when the system is running live in production. If you are predicting house prices, your features would be square footage, number of bedrooms, and zip code.\n\nThe Label, denoted by the lowercase letter 'y', is the specific return value you are trying to predict. It is the 'answer key' you provide during the training phase so the algorithm can learn the relationship between X and y. In our housing example, the label is the final sale price.\n\nA critical trap in machine learning is 'target leakage'. This occurs when you accidentally include a feature in your training data that would not logically exist at the time of prediction in the real world. If you use 'amount of tax paid at sale' to predict 'sale price', your model will cheat, perform perfectly in testing, and fail spectacularly in production.",
+          "keyPoints": [
+            "Features (X) are the input variables used to make predictions.",
+            "The Label (y) is the target variable you want the model to predict.",
+            "Target leakage happens when future information accidentally leaks into your training features."
+          ],
+          "example": "If Uber is trying to predict how long a ride will take (Label y), the Features (X) include the pickup location, destination, time of day, and weather. They cannot include the 'driver rating for the trip' as a feature, because that rating doesn't exist until after the ride is already over.",
+          "misconception": "Common mistake: Throwing every single column in your database into the model as a feature. More data isn't always better; irrelevant or leaky features actively harm model performance.",
+          "analogy": "Think of it like taking a math test. Features (X) are the questions on the paper. The Label (y) is the teacher's answer key. Target leakage is accidentally leaving the teacher's answer key on the student's desk during the test."
+        },
+        {
+          "title": "Training vs Inference",
+          "body": "The lifecycle of a machine learning model is strictly divided into two distinct phases: Training and Inference. Training is the intensive, computationally expensive process where the model actually learns. During this phase, you feed the algorithm massive amounts of historical data (Features and Labels). The algorithm runs millions of optimization loops, constantly tweaking its internal mathematical weights, making predictions, checking its errors, and correcting itself until it finds the best possible fit.\n\nBecause training requires churning through gigabytes or terabytes of data, it is usually done offline using powerful GPUs. It can take hours, days, or even months for massive models like GPT-4.\n\nInference, on the other hand, is what happens in production. Once the model is fully trained, its internal weights are locked. You deploy this fitted, frozen model to a server. When a user sends a new piece of data to your API, you simply pass it through the model by calling a function like `model.predict(new_data)`. Inference is lightweight, fast, and requires a tiny fraction of the compute power compared to training, because it's just executing a static mathematical equation.",
+          "keyPoints": [
+            "Training is the heavy optimization loop where the model learns from historical data.",
+            "Inference is the lightweight execution of the trained model on new, live data.",
+            "Model weights are dynamically updated during training but frozen during inference."
+          ],
+          "example": "When Netflix recommends a movie, that's inference—it happens in milliseconds while you browse. But the Netflix recommendation engine was trained offline on massive clusters of GPUs overnight, processing the viewing histories of millions of users.",
+          "misconception": "Common mistake: Thinking the model continues to learn and update itself in real-time as users interact with it during inference. Standard models are static in production until a completely new training run is deployed.",
+          "analogy": "Think of it like becoming a chef. Training is spending years in culinary school, practicing recipes, and burning food until you master the techniques. Inference is opening a restaurant and quickly cooking a meal for a customer using the skills you already locked in."
+        }
+      ],
+      "example": "# Traditional CS: You code the logic manually\ndef check_spam(msg):\n    return \"lottery\" in msg.lower()\n\n# Machine Learning: Model learns the coefficients from data\n# y_pred = model.predict(X_new)",
+      "exercise": "You want to predict whether a customer will cancel their subscription this month. Name 2 valid features and 1 feature that causes data leakage.",
+      "answer": "Valid: Login frequency in last 30 days, support tickets opened. Leakage: \"Cancellation survey comments\" (only exists AFTER they cancel).",
+      "checks": [
+        {
+          "question": "In traditional programming you write rules. In Machine Learning, what does the computer generate?",
+          "options": [
+            "The input features",
+            "The rules/parameters",
+            "The database"
+          ],
+          "correct": 1,
+          "explanation": "ML algorithms learn the optimal rules/parameters by analyzing data examples."
+        },
+        {
+          "question": "What is calling model.predict(data) in a live backend API called?",
+          "options": [
+            "Training",
+            "Inference",
+            "Backpropagation"
+          ],
+          "correct": 1,
+          "explanation": "Applying a trained model to make predictions on new data is inference."
+        }
+      ],
+      "game": "boundary",
+      "sources": [
+        "w3_ml",
+        "intro",
+        "course"
+      ]
+    },
+    {
+      "id": "linear",
+      "title": "Linear Regression",
+      "track": "ML Algorithms",
+      "summary": "Predicting numeric values with weights, loss, and gradient descent.",
+      "sections": [
+        {
+          "title": "The Line Equation: y = mx + b",
+          "body": "Linear regression is the foundational building block of machine learning. Under the hood, it is essentially the same algebraic equation you learned in high school math: y = mx + b. In this equation, 'y' is the continuous numeric target you want to predict. The 'x' represents your input feature. The 'm' represents the weight (how much the input matters), and 'b' is the bias (the baseline starting point if the input is zero).\n\nWhen we move from high school math to computer science, we just expand this equation to handle multiple variables. If you are predicting a house price based on square footage, age, and number of rooms, the model computes a weighted sum of all these inputs plus a single bias term: y = (w1*x1) + (w2*x2) + (w3*x3) + b.\n\nThe magic of machine learning is that you don't have to guess the weights or the bias. The algorithm automatically calculates the precise values for these parameters that result in a straight line cutting perfectly through the center of your training data. It remains the gold-standard baseline model for any continuous numeric prediction.",
+          "keyPoints": [
+            "Linear regression models continuous targets using a weighted sum of input features.",
+            "The algorithm automatically determines the optimal weights and bias for your data.",
+            "It assumes a straight-line, linear relationship between inputs and the output."
+          ],
+          "example": "If Airbnb uses linear regression to suggest a nightly price, 'b' is the base price of a house in that city. The weights multiply against features: adding $50 for every bedroom, subtracting $5 for every mile away from downtown, and adding $20 for having a pool.",
+          "misconception": "Common mistake: Trying to use linear regression for classification problems (like predicting 'Cat' vs 'Dog'). Linear regression is strictly for continuous numeric outputs, like prices, temperatures, or time.",
+          "analogy": "Think of it like calculating a restaurant bill. The bias is the fixed seating charge. The weights are the prices of individual menu items, and the inputs are how many of each item you ordered. The total prediction is just a weighted sum of your choices."
+        },
+        {
+          "title": "Loss Function: Mean Squared Error (MSE)",
+          "body": "For a machine learning model to improve, it needs a way to quantitatively measure how badly it is currently performing. This measurement is called a 'Loss Function'. In linear regression, the most common loss function is Mean Squared Error, or MSE.\n\nMSE works through a very specific sequence of steps. First, the model makes a prediction for a piece of data. It subtracts this prediction from the actual, true value to find the 'error' or 'residual'. It then squares that error. Finally, it averages all of these squared errors across the entire dataset. The primary goal of the training phase is to find the model weights that make this final average as close to zero as possible.\n\nWhy do we square the errors instead of just using absolute values? Two reasons. First, squaring mathematically eliminates negative numbers, preventing positive and negative errors from canceling each other out. Second, squaring penalizes large mistakes disproportionately. An error of 2 becomes a penalty of 4, but an error of 10 becomes a massive penalty of 100. This forces the model to prioritize avoiding huge, embarrassing misses.",
+          "keyPoints": [
+            "A loss function calculates the difference between model predictions and reality.",
+            "Mean Squared Error (MSE) squares the errors before averaging them.",
+            "Squaring disproportionately penalizes massive prediction errors over tiny ones."
+          ],
+          "example": "Imagine Zillow predicting house prices. If it predicts a $300k house is worth $301k (error of $1k), MSE barely cares. But if it predicts a $300k house is worth $800k (error of $500k), MSE applies a catastrophic penalty to the model's score, forcing the algorithm to aggressively adjust its weights to fix that specific mistake.",
+          "misconception": "Common mistake: Thinking that an MSE of 0 is always the goal. If your MSE hits exactly 0, your model hasn't learned the pattern—it has just memorized the training data and will likely fail in production (overfitting).",
+          "analogy": "Think of it like a strict dartboard referee. If your dart misses the bullseye by 1 inch, you lose 1 point. If you miss by 5 inches, you don't lose 5 points—you lose 25 points. It forces you to focus entirely on eliminating wild, chaotic throws."
+        },
+        {
+          "title": "Optimization: Gradient Descent",
+          "body": "If the Loss Function tells a model how wrong it is, Gradient Descent is the engine that actually fixes it. Imagine you are dropped on the side of a foggy mountain blindfolded, and you need to get to the very bottom of the valley (the point of lowest error). You can't see the valley, but you can feel the slope of the ground beneath your feet. Gradient descent is the mathematical equivalent of taking a step downhill in the steepest direction.\n\nUnder the hood, the algorithm uses calculus to compute the derivative (the gradient) of the loss function with respect to every single weight in the model. This derivative tells the model which direction is 'downhill' to reduce the error. The model then updates its weights by taking a small step in that direction: w = w - (learning_rate * gradient).\n\nThe 'learning rate' determines the size of the step. If the learning rate is too large, the model takes massive leaps, accidentally overshooting the bottom of the valley and bouncing out of control. If it is too small, the model takes microscopic steps, and training takes agonizingly long. Finding the right learning rate is crucial for training stable models.",
+          "keyPoints": [
+            "Gradient descent is an optimization algorithm used to minimize the loss function.",
+            "It uses calculus derivatives to find the steepest path toward zero error.",
+            "The learning rate controls the step size; tuning it is critical to model convergence."
+          ],
+          "example": "If Tesla's self-driving AI is steering too far left, the loss function registers a high error. Gradient descent calculates exactly which neural network weights caused the left turn, and slightly adjusts them in the opposite direction so the next time it encounters that curve, it stays centered.",
+          "misconception": "Common mistake: Assuming gradient descent always finds the absolute best solution. In complex models, it can get stuck in a 'local minimum'—a small dip on the mountainside—thinking it's at the absolute bottom when a deeper valley exists elsewhere.",
+          "analogy": "Think of it like tuning a radio dial. If you hear static (high loss), you turn the knob slightly. If the static gets worse, you know you turned it the wrong way, so you reverse direction (the gradient). You take smaller and smaller turns (learning rate) until the audio is perfectly clear."
+        }
+      ],
+      "example": "from sklearn.linear_model import LinearRegression\n\n# Features: [Hours Studied, Practice Tests]\nX = [[2, 1], [4, 2], [6, 3], [8, 4]]\ny = [52, 68, 81, 95]  # Exam scores\n\nmodel = LinearRegression()\nmodel.fit(X, y)\nprint(\"Predicted score for 5h study:\", model.predict([[5, 2.5]]))",
+      "exercise": "If gradient is -3.0 and learning rate is 0.1, what is the weight update?",
+      "answer": "w_new = w - (0.1 * -3.0) = w + 0.3. The weight increases to reduce the loss.",
+      "checks": [
+        {
+          "question": "What kind of output does Linear Regression predict?",
+          "options": [
+            "A category (Spam/Not Spam)",
+            "A continuous number (e.g., Price, Latency)",
+            "An unlabelled cluster"
+          ],
+          "correct": 1,
+          "explanation": "Linear regression predicts continuous numeric values."
+        },
+        {
+          "question": "What happens if the gradient descent learning rate is set too large?",
+          "options": [
+            "It converges instantly",
+            "It can overshoot the minimum and diverge",
+            "It turns into a decision tree"
+          ],
+          "correct": 1,
+          "explanation": "Too large a step can cause the loss to oscillate or explode to infinity."
+        }
+      ],
+      "game": "gradient",
+      "sources": [
+        "linear",
+        "w3_ml",
+        "gradient"
+      ]
+    },
+    {
+      "id": "problems",
+      "title": "Logistic Regression & Classification",
+      "track": "ML Algorithms",
+      "summary": "Predicting yes/no categories with probability curves and thresholds.",
+      "sections": [
+        {
+          "title": "Why Not Linear for Yes/No?",
+          "body": "When you transition from predicting continuous numbers (like prices) to predicting categories (like 'Spam' or 'Not Spam'), linear regression breaks down. If you map 'Not Spam' to 0 and 'Spam' to 1, and attempt to fit a straight line through the data, the geometry of the line guarantees that it will stretch off to infinity in both directions.\n\nThis creates a massive problem for computer systems: a straight line will predict nonsensical values like -2.5 or +4.8 for certain inputs. What does it mean for an email to be -250% spam? It makes no logical sense, and you cannot safely route this output in application code.\n\nLogistic regression solves this by abandoning the straight line. It takes the output of the linear equation and wraps it in a special mathematical transformation that bends the straight line into an 'S' shape. This shape strictly bounds the output, squishing extreme negative numbers close to 0, and extreme positive numbers close to 1. The model now cleanly outputs percentages, returning a neat '0.85', meaning there is an 85% probability the data belongs to the positive class.",
+          "keyPoints": [
+            "Linear regression outputs unbounded numbers from negative to positive infinity.",
+            "Binary classification requires outputs to be strictly bounded between 0 and 1.",
+            "Logistic regression bends the linear output into a bounded S-curve to represent probability."
+          ],
+          "example": "If a bank uses linear regression to predict loan defaults, extreme data points might cause the model to output a -500% chance of default. Logistic regression fixes this, outputting a clean 0.01% probability, which the bank's backend code can easily handle.",
+          "misconception": "Common mistake: Believing that logistic regression is a regression algorithm because of its name. Despite the confusing historical name, logistic regression is strictly used for classification problems, not predicting continuous numbers.",
+          "analogy": "Think of it like a volume knob on a stereo. Linear regression is a broken knob that lets you turn the volume up infinitely until the speakers explode. Logistic regression adds a physical limiter to the knob, capping the volume strictly between 0 and 10."
+        },
+        {
+          "title": "The Sigmoid Curve & Probabilities",
+          "body": "The mathematical magic that makes logistic regression work is called the Sigmoid function. Its formula is S(z) = 1 / (1 + e^-z). While the equation looks complex, its job in a computer system is incredibly simple: it is a translation layer. It takes any real number—no matter how wildly negative or infinitely positive—and perfectly scales it into a decimal between 0 and 1.\n\nIn the context of machine learning, we treat this bounded decimal as a probability. If the raw internal linear calculation evaluates to 0 (a perfectly neutral prediction), the Sigmoid function outputs exactly 0.5, meaning a 50/50 coin toss. If the internal calculation is a massive positive number like 10,000, the formula outputs 0.9999, indicating overwhelming confidence.\n\nThis conversion to probability is essential for application developers. Instead of dealing with abstract, arbitrary model scores, engineers can write standard business logic against these probabilities. You can confidently write code like `if (model_probability > 0.80): block_transaction()`, knowing the model's output will always respect basic probability rules.",
+          "keyPoints": [
+            "The Sigmoid function translates any number into a value between 0 and 1.",
+            "In classification, we interpret this output as the percentage confidence or probability.",
+            "A raw internal score of exactly 0 maps directly to a 50% probability."
+          ],
+          "example": "When a credit card is swiped, the fraud model internally calculates a raw risk score of 4.5. The Sigmoid function converts 4.5 into 0.98. The payment gateway sees a 98% probability of fraud and automatically blocks the swipe, sending an SMS alert to the user.",
+          "misconception": "Common mistake: Assuming the probability output of a Sigmoid function represents absolute, real-world certainty. It is only the model's mathematical confidence based on its limited training data, not a guarantee of truth.",
+          "analogy": "Think of it like a bouncer at a club. The linear model yells out huge raw scores. The bouncer (Sigmoid function) ignores the yelling and just checks an ID, returning a simple 0 (Denied) to 1 (Approved) confidence rating."
+        },
+        {
+          "title": "Decision Thresholds",
+          "body": "When a logistic regression model outputs a probability, like 0.73, the model's job is technically done. However, your application still needs to make a hard binary decision: do we block the user, or do we allow them? To convert the probability into a hard yes/no action, engineers use a Decision Threshold.\n\nBy default, the threshold is almost always set to 0.50. If the model outputs 0.51, it's a 'Yes'. If it outputs 0.49, it's a 'No'. But in real-world engineering, keeping the threshold at 0.50 is often a mistake. The threshold is your primary business lever to control the balance between False Positives (false alarms) and False Negatives (missed threats).\n\nIf the cost of missing a true positive is catastrophic, you must lower the threshold. In cancer screening, you don't wait for 50% certainty. You lower the threshold to 0.05 so the system flags anyone with even a slight anomaly for a biopsy. Conversely, if false alarms annoy users, you raise the threshold to 0.90, ensuring the system only takes action when it is absolutely certain.",
+          "keyPoints": [
+            "A decision threshold converts continuous probabilities into hard binary actions.",
+            "The default threshold is 0.5, but it should be adjusted based on business goals.",
+            "Lowering the threshold catches more true positives, but increases false alarms."
+          ],
+          "example": "YouTube's automated copyright strike system uses a very high threshold (e.g., 0.95). If they set it to 0.50, thousands of innocent creators would get strikes (false positives), causing public outrage. They only issue automated strikes when the algorithm is 95% confident.",
+          "misconception": "Common mistake: Retraining an entire model just to get it to predict more 'Yes' labels. You don't need to retrain the model; you just need to lower the threshold in your application code.",
+          "analogy": "Think of it like a smoke detector. A threshold of 0.5 is a normal detector. If you lower the threshold to 0.1, the detector becomes hypersensitive, saving you from any fire but also going off every time you make toast. The threshold is the sensitivity dial."
+        }
+      ],
+      "example": "from sklearn.linear_model import LogisticRegression\n\n# Features: [Hours studied, Attendance %]\nX = [[1, 40], [3, 60], [6, 80], [8, 95]]\ny = [0, 0, 1, 1]  # 0: Fail, 1: Pass\n\nclf = LogisticRegression()\nclf.fit(X, y)\nprob = clf.predict_proba([[5, 75]])[0][1] # Probability of Pass\nprint(f\"Pass Probability: {prob:.1%}\")",
+      "exercise": "A loan fraud detector outputs p = 0.35. If the threshold is 0.30, what is the classification decision?",
+      "answer": "Flagged as fraud! Because 0.35 >= 0.30 threshold. Lower thresholds increase sensitivity.",
+      "checks": [
+        {
+          "question": "Despite its name, what task is Logistic Regression used for?",
+          "options": [
+            "Regression",
+            "Classification",
+            "Clustering"
+          ],
+          "correct": 1,
+          "explanation": "Logistic Regression is a binary classification algorithm."
+        },
+        {
+          "question": "What does the Sigmoid activation function output?",
+          "options": [
+            "Any positive integer",
+            "A probability between 0 and 1",
+            "Either strictly 0 or 1 with no decimals"
+          ],
+          "correct": 1,
+          "explanation": "Sigmoid squeezes outputs into smooth probabilities between 0.0 and 1.0."
+        }
+      ],
+      "game": "iris",
+      "sources": [
+        "w3_logistic",
+        "intro",
+        "iris"
+      ]
+    },
+    {
+      "id": "trees",
+      "title": "Decision Trees & Random Forests",
+      "track": "ML Algorithms",
+      "summary": "Intuitive if/else rule branching and democratic committee ensembles.",
+      "sections": [
+        {
+          "title": "Decision Trees: Automated If/Else",
+          "body": "At their core, Decision Trees are just automated if/else statements. As a programmer, you could manually write hundreds of nested if/else blocks to classify data, but it would be brittle and hard to maintain. A Decision Tree algorithm automates this process, algorithmically scanning your dataset to figure out exactly which rules to write.\n\nThe algorithm works top-down. At the root, it looks at every single feature and every single threshold possible, and calculates which single split will divide the dataset into the purest groups. For instance, if it finds that splitting users by 'Age > 25' perfectly separates the buyers from the non-buyers, it creates that branch. It then recursively repeats this process for the sub-groups until it reaches a final decision, called a leaf.\n\nDecision trees have massive advantages for developers: they require virtually no data preparation. Unlike neural networks or linear regression, decision trees don't care if your data is scaled, skewed, or contains outliers. Furthermore, because the output is literally a flowchart of if/else rules, the logic is 100% interpretable. You can print the tree and explain exactly why a decision was made to stakeholders.",
+          "keyPoints": [
+            "Decision trees algorithmically build optimal if/else branching rules.",
+            "They split data by finding the feature that creates the purest, most separated subsets.",
+            "They are highly interpretable and require no feature scaling or normalization."
+          ],
+          "example": "If a hospital wants to predict heart attacks, a decision tree might generate the explicit rule: IF Blood_Pressure > 140 AND Age > 55 AND Smoker == True, THEN Risk = High. A doctor can read this exact rule, verify it against medical literature, and trust the model.",
+          "misconception": "Common mistake: Believing decision trees are a black box. Of all machine learning models, decision trees are the most transparent—they simply generate the exact logic flows that a programmer would write by hand.",
+          "analogy": "Think of it like playing the game 'Guess Who?'. You don't ask 'Is their hair brown?' first, because that's a weak split. The algorithm acts like an expert player, mathematically finding the perfect question ('Are they wearing a hat?') that eliminates half the board instantly."
+        },
+        {
+          "title": "The Overfitting Trap: Max Depth",
+          "body": "While Decision Trees are wonderfully intuitive, they suffer from a fatal flaw: if left completely unchecked, they will overfit your training data perfectly, resulting in terrible performance in production. Overfitting means the model memorizes the data rather than learning the underlying patterns.\n\nBy default, a decision tree will continue to grow, creating deeper and deeper nested if/else branches, until every single training example has its own personal leaf node. Imagine a tree creating a rule like: IF Age == 42 AND ZipCode == 90210 AND Purchased_On == Tuesday THEN Churn = True. This rule perfectly describes exactly one person in the historical data, but it is completely useless for predicting the behavior of new users.\n\nTo prevent this, engineers use hyperparameters—settings that restrict the model's behavior. The most important hyperparameter is `max_depth`. By setting `max_depth=5`, you force the tree to stop growing after 5 levels of if/else statements. This forces the algorithm to focus only on broad, generalizable rules rather than hyper-specific memorization.",
+          "keyPoints": [
+            "Unconstrained decision trees will always overfit by memorizing the training data.",
+            "Overfitting results in complex, highly specific rules that fail on unseen data.",
+            "Controlling `max_depth` forces the tree to learn broad, generalizable patterns."
+          ],
+          "example": "Imagine building a movie recommendation tree. Without limits, the tree memorizes that 'User 748, who lives in Ohio and logged in at 3 AM, liked The Matrix'. With a `max_depth` limit, it learns the broader, useful pattern: 'Users who liked Inception generally also like The Matrix'.",
+          "misconception": "Common mistake: Thinking 100% training accuracy is a good thing. If a decision tree achieves perfect accuracy on training data, it is almost certainly a red flag that it has dangerously overfitted.",
+          "analogy": "Think of it like a student studying for a history test. A limited-depth tree understands the broad causes of World War II. An unconstrained tree memorizes the page numbers and font sizes of the textbook—it aces the practice test but fails the real exam."
+        },
+        {
+          "title": "Random Forests: Wisdom of the Crowd",
+          "body": "To solve the instability and overfitting of single decision trees, engineers rely on an ensemble technique called the Random Forest. A Random Forest doesn't train just one tree; it trains hundreds of independent decision trees and averages their predictions together. It is the machine learning equivalent of the 'wisdom of the crowd'.\n\nIf you train 100 identical trees on the exact same data, they will all make the same mistakes. The genius of the Random Forest lies in the word 'Random'. First, each tree is trained on a random, scrambled subset of the rows in your database (called bootstrapping). Second, at every single branch in the tree, the algorithm is only allowed to look at a random subset of your columns (features).\n\nBy artificially restricting what each tree can see, the algorithm forces the creation of 100 highly diverse, specialized trees. Some trees become experts on demographics, while others become experts on geographic features. When a new user comes into the system, all 100 trees make a prediction. In classification, they take a majority vote. The result is a profoundly robust model that slashes variance and is nearly impossible to overfit.",
+          "keyPoints": [
+            "Random Forests combine hundreds of decision trees to create a stable, robust model.",
+            "Each tree is trained on random subsets of rows and features to ensure diversity.",
+            "The final prediction is made by averaging (regression) or voting (classification)."
+          ],
+          "example": "If Zillow uses a Random Forest to price a home, Tree #1 might overvalue it because of a pool, while Tree #2 undervalues it due to crime rates. By averaging the outputs of 500 diverse trees, the individual errors cancel out, yielding an incredibly accurate final price.",
+          "misconception": "Common mistake: Trying to print out and interpret a Random Forest like a single Decision Tree. Because it relies on the voting of hundreds of randomized trees, you lose the clean, flowchart interpretability of a single tree model.",
+          "analogy": "Think of it like guessing the number of jellybeans in a jar. If you ask one person, they might be wildly off. If you ask 500 random people and average their guesses, the errors cancel out, and the final average is almost exactly correct."
+        }
+      ],
+      "example": "from sklearn.ensemble import RandomForestClassifier\n\n# 100 decision trees voting together\nmodel = RandomForestClassifier(n_estimators=100, max_depth=5, random_state=42)\nmodel.fit(X_train, y_train)\nprint(\"Test accuracy:\", model.score(X_test, y_test))\nprint(\"Top feature importances:\", model.feature_importances_)",
+      "exercise": "Why is an ensemble of 100 trees better than 1 very deep tree?",
+      "answer": "A single deep tree overfits to training quirks. The forest averages out individual errors, giving stable predictions.",
+      "checks": [
+        {
+          "question": "What is the main danger of an unconstrained Decision Tree?",
+          "options": [
+            "It trains too slowly",
+            "Severe overfitting to training noise",
+            "It cannot handle numbers"
+          ],
+          "correct": 1,
+          "explanation": "Without max_depth constraints, trees memorize noise and fail on new data."
+        },
+        {
+          "question": "How does a Random Forest make a final classification prediction?",
+          "options": [
+            "Takes the output of only the deepest tree",
+            "Aggregates majority vote across all trees",
+            "Runs gradient descent on the leaves"
+          ],
+          "correct": 1,
+          "explanation": "Random Forest averages probabilities or takes the majority vote across all trees."
+        }
+      ],
+      "game": "overfit",
+      "sources": [
+        "w3_trees",
+        "tree",
+        "ensemble"
+      ]
+    },
+    {
+      "id": "ensembles",
+      "title": "Gradient Boosting & XGBoost",
+      "track": "ML Algorithms",
+      "summary": "The tabular competition winner: learning sequentially from mistakes.",
+      "sections": [
+        {
+          "title": "Random Forest vs Gradient Boosting",
+          "body": "While both Random Forest and Gradient Boosting are ensemble methods that use hundreds of decision trees, their architecture and philosophy are fundamentally opposites. Random Forest is a parallel, independent approach. It builds hundreds of fully-grown trees at the exact same time. The trees do not communicate with each other—they simply vote at the end. It relies on diversity to reduce errors.\n\nGradient Boosting is a sequential, highly focused approach. Instead of building 100 independent trees, it builds one small, shallow tree. It tests that tree, finds exactly which data points the tree got wrong. It then builds a second tree whose only job is to fix the errors (the residuals) of the first tree. Then a third tree is built to fix the errors of the second, and so on.\n\nBecause Gradient Boosting trees learn from the mistakes of their predecessors, they are hyper-efficient. While a Random Forest might need deep trees to get a good result, Gradient Boosting uses tiny 'weak learners' (trees that are only 3–6 levels deep) chained together to slowly converge on an incredibly precise prediction.",
+          "keyPoints": [
+            "Random Forests train independent trees in parallel and average their votes.",
+            "Gradient Boosting trains small trees sequentially, each fixing the errors of the last.",
+            "Gradient Boosting generally achieves higher accuracy but is more prone to overfitting."
+          ],
+          "example": "Think of a Random Forest as an exam graded by a panel of 100 independent judges who average their scores. Gradient Boosting is like a writer passing a manuscript to an editor, who passes it to a proofreader—each person strictly fixing the mistakes left by the person before them.",
+          "misconception": "Common mistake: Assuming you can train Gradient Boosting models across hundreds of CPU cores easily. Because tree N+1 cannot be built until tree N is finished, gradient boosting is inherently harder to parallelize than Random Forests.",
+          "analogy": "Think of it like playing golf. Random Forest is taking 100 independent swings from the tee and averaging where the balls land. Gradient Boosting is taking your first drive, walking to where the ball landed, taking a shorter iron shot, and tapping in the putt."
+        },
+        {
+          "title": "Why XGBoost Dominates Tabular Data",
+          "body": "If you follow AI news, you hear constantly about Deep Learning and Neural Networks. But in the world of traditional corporate databases—spreadsheets, SQL tables, CRM records, and financial logs—Neural Networks frequently lose to a specialized implementation of Gradient Boosting called XGBoost (Extreme Gradient Boosting). For tabular data, XGBoost is the undisputed king of Kaggle competitions and production systems.\n\nNeural networks excel at unstructured data like images, audio, and text, where features blend continuously. But tabular data is messy and discontinuous. An age column might be continuous, while a categorical 'State' column is entirely disjointed. XGBoost uses decision trees under the hood, which naturally handle missing values, unscaled numeric data, and categorical splits without requiring complex data pipelines.\n\nFurthermore, XGBoost is heavily optimized with advanced system engineering. It uses hardware-level caching and clever math (second-order gradients) to build trees significantly faster than standard algorithms. It delivers higher accuracy than deep learning on structured data, trains in a fraction of the time, and costs far less to run in production.",
+          "keyPoints": [
+            "XGBoost is the industry standard algorithm for structured, tabular SQL/CSV data.",
+            "Deep Neural Networks generally underperform XGBoost on standard corporate databases.",
+            "XGBoost handles missing data naturally and requires minimal feature scaling."
+          ],
+          "example": "When a bank like Capital One builds a model to predict credit card default using SQL tables of customer history, they don't use a massive 50-layer neural network. They use XGBoost, because it trains in minutes, handles missing income fields automatically, and predicts more accurately.",
+          "misconception": "Common mistake: Jumping straight to Deep Learning (PyTorch/TensorFlow) just because your company wants 'AI' for their SQL database. Neural networks on tabular data are usually slower, more expensive, and less accurate than boosted trees.",
+          "analogy": "Think of it like moving furniture. A neural network is a massive, expensive 18-wheeler truck—perfect for moving a whole house (images/text). XGBoost is a nimble fleet of pickup trucks—infinitely better for moving standard boxes out of a standard warehouse."
+        },
+        {
+          "title": "Tuning Boosting Hyperparameters",
+          "body": "Because Gradient Boosting sequentially corrects errors, it is highly aggressive. If you let it train for too long, it will eventually memorize the dataset perfectly, tracking every single outlier and piece of noise. To extract the power of XGBoost safely, you must tune its hyperparameters carefully. The three most critical levers are `learning_rate`, `n_estimators`, and `max_depth`.\n\nThe `n_estimators` parameter controls how many sequential trees are built. The `learning_rate` acts as a brake pedal; instead of letting tree #5 correct 100% of tree #4's errors, a learning rate of 0.05 only allows it to correct 5%. This forces the algorithm to build more trees, slowly and robustly carving out the pattern rather than jumping to conclusions.\n\nThere is a strict mathematical relationship: if you lower the learning rate, you must increase the number of trees (n_estimators) to compensate. To prevent overfitting, engineers use 'early stopping'. This tells the algorithm to monitor a separate validation dataset during training. If the model builds 20 new trees and the validation accuracy stops improving, early stopping aborts the training loop instantly.",
+          "keyPoints": [
+            "Lower learning rates make the model robust, but require more trees to train.",
+            "Keep `max_depth` shallow (usually 3 to 6) to prevent individual trees from overfitting.",
+            "Always use 'early stopping' to halt training the moment validation accuracy drops."
+          ],
+          "example": "An engineer at Spotify tuning a churn-prediction model sets the `learning_rate` to 0.01 and `n_estimators` to 5000, with early stopping set to 50. The model trains up to tree #840, realizes it isn't getting any smarter on unseen data, and automatically stops.",
+          "misconception": "Common mistake: Setting the `learning_rate` to 1.0 to make the model train faster. High learning rates cause the model to wildly overshoot the optimal solution, resulting in volatile predictions and terrible real-world performance.",
+          "analogy": "Think of it like sculpting a statue. High learning rate is using a chainsaw—fast, but ruins the details. A low learning rate is using sandpaper. Early stopping is stepping back every 5 minutes to check the statue, and stopping before you sand the nose entirely off."
+        }
+      ],
+      "example": "import xgboost as xgb\n\n# Sequential error correction\nmodel = xgb.XGBClassifier(n_estimators=150, learning_rate=0.05, max_depth=4)\nmodel.fit(X_train, y_train)\npreds = model.predict(X_test)",
+      "exercise": "Tree 1 predicts house price is $300k, but actual is $340k (residual = +$40k). What does Tree 2 try to predict?",
+      "answer": "Tree 2 trains to predict the +$40k residual! Adding Tree 1 + Tree 2 brings prediction closer to actual.",
+      "checks": [
+        {
+          "question": "How does Gradient Boosting build new trees?",
+          "options": [
+            "Sequentially to correct residuals of previous trees",
+            "In parallel with no connection",
+            "By randomly shuffling labels"
+          ],
+          "correct": 0,
+          "explanation": "Each subsequent tree trains on the errors/residuals left by previous trees."
+        },
+        {
+          "question": "For structured tabular data, what model class often outperforms deep learning?",
+          "options": [
+            "Gradient Boosted Trees (XGBoost/LightGBM)",
+            "Simple k-Means",
+            "Unregulated single Decision Tree"
+          ],
+          "correct": 0,
+          "explanation": "XGBoost and LightGBM are the industry standard for tabular data."
+        }
+      ],
+      "game": "gradient",
+      "sources": [
+        "xgboost",
+        "ensemble",
+        "intro"
+      ]
+    },
+    {
+      "id": "clustering",
+      "title": "k-NN & K-Means Clustering",
+      "track": "ML Algorithms",
+      "summary": "Distance-based classification and discovering hidden data clusters.",
+      "sections": [
+        {
+          "title": "k-Nearest Neighbors (k-NN)",
+          "body": "k-Nearest Neighbors (k-NN) is arguably the simplest algorithm in all of machine learning. Unlike neural networks or regression, k-NN doesn't actually 'learn' any mathematical equation at all. In fact, its training phase is literally just saving the dataset into memory. Because of this, it is called a 'lazy learning' algorithm.\n\nWhen a new data point comes in for inference, the algorithm calculates the geometric distance (usually Euclidean) between that new point and every single point in the historical database. It then looks at the 'k' closest points. If you set k=5, it finds the 5 closest historical examples. Those 5 neighbors cast a vote based on their labels, and the majority wins.\n\nWhile incredibly simple to implement, k-NN scales terribly in production. If you have 10 million users in your database, classifying a single new user requires calculating 10 million distances on the fly. This makes it incredibly slow for high-throughput backend APIs, though it remains a powerful baseline tool for small datasets and recommendation engines.",
+          "keyPoints": [
+            "k-NN classifies new data by finding the most similar historical examples and voting.",
+            "It has zero training time but extremely slow inference time on large datasets.",
+            "The value 'k' is a hyperparameter—always use an odd number to avoid tie votes."
+          ],
+          "example": "If a real estate app wants to estimate the price of your house, a k-NN model simply finds the 5 houses geographically closest to yours with similar square footage (the 5 nearest neighbors) and averages their recent sale prices.",
+          "misconception": "Common mistake: Choosing an even number for 'k' in binary classification. If you set k=4, you risk a 2-2 tie vote. Always set 'k' to an odd number (like 3, 5, or 7) to guarantee a majority winner.",
+          "analogy": "Think of it like moving to a new city and trying to figure out if your neighborhood is conservative or liberal. You don't read the city charter; you just knock on the doors of your 5 closest neighbors and ask them. The majority vote is your answer."
+        },
+        {
+          "title": "K-Means: Grouping Without Labels",
+          "body": "So far, we have discussed 'Supervised Learning', where you have a Label (y) like 'Spam' or 'Price' to train against. K-Means belongs to 'Unsupervised Learning'. In this scenario, you just have a massive database of user behavior, but no labels. You ask the algorithm: 'I don't know what the patterns are, but please divide my users into exactly K distinct groups based on their similarities.'\n\nK-Means works through an elegant, repetitive dance. If you want 3 groups (K=3), the algorithm drops 3 random center points (centroids) into the data space. First, every data point assigns itself to the closest centroid. Second, the algorithm recalculates the exact center of those new clusters, and moves the centroid to that exact middle.\n\nIt repeats this process—assign points, move centroid, assign points, move centroid—until the centroids stop moving entirely. The result is a mathematically optimized segmentation of your data, heavily used in marketing to automatically discover distinct customer personas.",
+          "keyPoints": [
+            "K-Means is unsupervised learning; it finds hidden groupings in data without labels.",
+            "You must manually specify the number of clusters (K) before running the algorithm.",
+            "The algorithm alternates between assigning points and centering clusters until stable."
+          ],
+          "example": "A marketing team at Nike feeds millions of customer purchase histories into a K-Means model with K=4. Without human input, the model outputs 4 distinct clusters: 'Weekend Runners', 'Yoga Enthusiasts', 'Sneakerheads', and 'Bargain Hunters', allowing for highly targeted email campaigns.",
+          "misconception": "Common mistake: Assuming K-Means will automatically figure out the optimal number of groups. If you tell it to find 100 groups in data that only has 2 natural segments, it will brutally slice the data into 100 meaningless pieces.",
+          "analogy": "Think of it like an elementary school teacher telling 30 kids on a playground to 'form 3 groups based on who you are closest to'. The kids shuffle around, gravitate toward three hubs, and eventually settle into three tight circles without any explicit rules."
+        },
+        {
+          "title": "Why Feature Scaling Matters",
+          "body": "Any algorithm that relies on calculating spatial distance between data points—such as k-NN, K-Means, or Support Vector Machines—contains a massive pitfall for new engineers: the dominance of large numbers. If you don't scale your features, the algorithm will mathematically ignore your most important data.\n\nImagine you have a dataset of users with two features: Age (ranging from 18 to 70) and Annual Salary (ranging from $20,000 to $150,000). When the algorithm calculates the distance between two users, the mathematical difference in their salaries might be $40,000, while the difference in their age is only 5 years. Because $40,000 is infinitely larger than 5, the geometry of the algorithm will be 99.9% dominated by Salary. It essentially treats Age as if it doesn't exist.\n\nTo fix this, developers must apply Feature Scaling (like Min-Max Normalization or Standard Scaling) before training. Normalization crushes every single column down so all values fall strictly between 0 and 1. Suddenly, Age and Salary are on the exact same playing field, and the algorithm can respect both features equally.",
+          "keyPoints": [
+            "Distance-based algorithms mathematically over-prioritize columns with massive numeric values.",
+            "Feature scaling transforms all columns to a uniform scale (e.g., between 0 and 1).",
+            "Without scaling, small-number columns (like Age) are entirely ignored by the model."
+          ],
+          "example": "If a hospital uses K-Means to group patients based on 'White Blood Cell Count' (measured in thousands) and 'Body Temperature' (measured around 98.6), the algorithm will completely ignore the fever data unless both metrics are normalized to a 0-1 scale.",
+          "misconception": "Common mistake: Applying scaling to the training set, but forgetting to apply the exact same scaling logic to new live data in production. If your model expects numbers between 0-1 and the API sends a raw salary of $80,000, the model will crash or produce garbage output.",
+          "analogy": "Think of it like mixing a cocktail. If the recipe calls for '1 part bitters and 1 part soda', but you measure the bitters in drops and the soda in gallons, the drink is ruined. Scaling ensures all ingredients are measured using the exact same unit."
+        }
+      ],
+      "example": "from sklearn.cluster import KMeans\nfrom sklearn.preprocessing import StandardScaler\n\n# Always scale before computing distance!\nX_scaled = StandardScaler().fit_transform(X)\nkmeans = KMeans(n_clusters=3, random_state=42)\nclusters = kmeans.fit_predict(X_scaled)",
+      "exercise": "If you double k in k-NN from 1 to 21, does the decision boundary become more jagged or smoother?",
+      "answer": "Smoother! Larger k considers a broader neighborhood, reducing noise sensitivity and smoothing the boundary.",
+      "checks": [
+        {
+          "question": "Why must you scale features before running k-NN or K-Means?",
+          "options": [
+            "Otherwise large-magnitude features dominate distance calculations",
+            "Scaling is required by Python syntax",
+            "It converts categories to booleans"
+          ],
+          "correct": 0,
+          "explanation": "Distance formulas (like Euclidean) are heavily biased towards features with large numbers."
+        },
+        {
+          "question": "What kind of learning is K-Means clustering?",
+          "options": [
+            "Supervised learning with labels",
+            "Unsupervised learning without labels",
+            "Reinforcement learning"
+          ],
+          "correct": 1,
+          "explanation": "K-Means discovers natural clusters without predefined target labels."
+        }
+      ],
+      "game": "clusters",
+      "sources": [
+        "w3_knn",
+        "cluster",
+        "intro"
+      ]
+    },
+    {
+      "id": "evaluation",
+      "title": "Evaluation & Overfitting",
+      "track": "ML Algorithms",
+      "summary": "Train/Val/Test splits, precision, recall, and debugging generalisation.",
+      "sections": [
+        {
+          "title": "The Golden Rule: Never Test on Training Data",
+          "body": "The single most catastrophic mistake an engineer can make in machine learning is evaluating a model's performance on the exact same data it was trained on. Modern algorithms, especially neural networks and deep decision trees, possess enough mathematical capacity to simply memorize the entire dataset.\n\nIf you show a model a set of flashcards, and then test it using the exact same flashcards, a 100% score doesn't mean the model is intelligent—it means it has a good memory. If you deploy that model to production to face data it has never seen before, it will fail miserably. This is the definition of overfitting.\n\nTo prevent this, engineers strictly partition their database before any code is run. The standard practice is a three-way split: 70% Training data (the flashcards to learn from), 15% Validation data (used iteratively to tune hyperparameter settings), and 15% Test data. The Test data is locked away in a digital vault and is evaluated exactly once at the very end of the project. This ensures your final accuracy metric represents true, real-world generalization.",
+          "keyPoints": [
+            "Testing on training data provides a dangerously false sense of high accuracy.",
+            "Always split data into Training, Validation, and Test sets before starting.",
+            "The Test set must be kept entirely hidden until the final model is fully locked."
+          ],
+          "example": "An engineer at a startup boasts their new stock-prediction model has 99% accuracy. However, they tested it on data from 2020—the exact same data they used to train it. When deployed in 2024, the model loses money immediately because it only memorized 2020 market quirks, never the underlying logic.",
+          "misconception": "Common mistake: Tuning your model's hyperparameters to improve the Test set score repeatedly. By doing this, you are manually leaking the Test set's answers into the model. Hyperparameters must be tuned exclusively on the Validation set.",
+          "analogy": "Think of it like a college professor teaching a math course. The Training data is the homework. The Validation data is the practice exam. The Test data is the final exam. If the professor puts the exact homework questions on the final exam, grades reflect memorization, not math skills."
+        },
+        {
+          "title": "Accuracy is Dangerous on Imbalanced Data",
+          "body": "When developers evaluate a model, their first instinct is always to check the 'Accuracy' metric—simply the percentage of predictions the model got right. But in real-world business scenarios, Accuracy is often a dangerously misleading vanity metric that hides a completely broken system. This happens anytime your dataset is 'imbalanced'.\n\nImagine you are building a fraud detection model for Visa. In reality, 99.9% of all credit card swipes are perfectly legitimate, and only 0.1% are actual fraud. A totally useless machine learning model could just hardcode: return 'Legitimate'. This brain-dead model would technically achieve 99.9% accuracy, completely fooling executives, while letting every single fraudulent transaction pass through.\n\nWhen one class heavily outnumbers the other, accuracy breaks down. Engineers must completely abandon it and use advanced metrics like the Confusion Matrix, Precision, Recall, and the F1-Score to understand how the model is actually behaving on the rare, important minority class.",
+          "keyPoints": [
+            "Accuracy is only reliable when your classes are roughly a 50/50 split.",
+            "On imbalanced datasets, a model can guess the majority class and achieve 99% accuracy while failing its purpose.",
+            "Business-critical events (fraud, cancer, churn) are almost always highly imbalanced."
+          ],
+          "example": "A hospital builds an AI to detect a rare genetic disease that affects 1 in 1,000 people. The model proudly reports 99.9% accuracy. The doctors are thrilled, until they realize the model achieves this by simply telling every single patient they are perfectly healthy.",
+          "misconception": "Common mistake: Reporting overall accuracy to stakeholders when dealing with churn prediction, fraud detection, or disease screening. You must report metrics on the positive class specifically to avoid disaster.",
+          "analogy": "Think of it like a broken clock stuck at 3:00. It is perfectly accurate twice a day. A machine learning model that always predicts the majority class is the same broken clock—technically accurate, but fundamentally useless."
+        },
+        {
+          "title": "Precision vs Recall Tradeoff",
+          "body": "Once you abandon standard Accuracy, you must judge your model using two competing metrics: Precision and Recall. Precision answers the question: 'Out of all the times the model sounded the alarm, how often was it actually a real fire?' High precision means very few false alarms (False Positives). Recall answers a totally different question: 'Out of all the real fires that actually happened, how many did the model successfully detect?' High recall means you missed very few real threats (False Negatives).\n\nHere is the painful reality of machine learning in production: you almost never get both. Precision and Recall are mathematically opposed. If you increase the sensitivity of your model to catch every possible positive case (Recall up), you will inevitably start flagging innocent cases too (Precision down). This tradeoff is real, unavoidable, and must be managed by adjusting the decision threshold.\n\nThe F1-Score is the harmonic mean of Precision and Recall, giving a single number that balances both. Use it when you need to compare two models that have different Precision/Recall tradeoffs. In high-stakes domains, engineers often explicitly state a business target: 'We require at least 90% Recall, and will accept whatever Precision that gives us'.",
+          "keyPoints": [
+            "Precision measures the accuracy of positive predictions (avoiding false alarms).",
+            "Recall measures the completeness of positive detection (avoiding missed threats).",
+            "Improving one metric almost always hurts the other—choose based on business cost."
+          ],
+          "example": "A radiologist AI at Johns Hopkins scanning X-rays for tumors is tuned for maximum Recall (0.99). It will flag 50 patients who don't have cancer (low Precision) to guarantee it never misses a patient who does. The cost of a false alarm is a follow-up scan; the cost of a miss is a death.",
+          "misconception": "Common mistake: Optimizing for F1-Score alone without asking which error is more costly in your domain. In many business contexts, a False Negative is 10x more costly than a False Positive, and a pure F1 optimization would ignore this entirely.",
+          "analogy": "Think of it like a fishing net. A tiny-mesh net (high Recall) catches every single fish, but also catches rocks, seaweed, and boots. A large-mesh net (high Precision) only catches real fish, but lets smaller fish escape. The mesh size is your decision threshold."
+        }
+      ],
+      "example": "from sklearn.metrics import classification_report, confusion_matrix\n\n# Inspect precision, recall, and f1-score\nprint(confusion_matrix(y_true, y_pred))\nprint(classification_report(y_true, y_pred, target_names=[\"Legit\", \"Fraud\"]))",
+      "exercise": "In an airport security weapon detector, do you prioritize Precision or Recall?",
+      "answer": "Recall! A false alarm (low precision) means an extra bag search; a missed weapon (low recall) is catastrophic.",
+      "checks": [
+        {
+          "question": "A fraud detector predicts no fraud ever on a dataset with 1% fraud. What is its Recall for fraud?",
+          "options": [
+            "99%",
+            "0%",
+            "50%"
+          ],
+          "correct": 1,
+          "explanation": "It found 0 out of the actual fraud cases, so recall is 0% despite 99% accuracy."
+        },
+        {
+          "question": "Which dataset split should be held out and evaluated only once at the very end?",
+          "options": [
+            "Training set",
+            "Validation set",
+            "Final Test set"
+          ],
+          "correct": 2,
+          "explanation": "The test set gives an unbiased estimate of real-world generalization."
+        }
+      ],
+      "game": "threshold",
+      "sources": [
+        "eval",
+        "metrics",
+        "pitfalls"
+      ]
+    },
+    {
+      "id": "prompting",
+      "title": "Prompt Engineering & In-Context Reasoning",
+      "track": "GenAI & Agents",
+      "summary": "Directing foundation models with system instructions, few-shot prompts, and CoT.",
+      "sections": [
+        {
+          "title": "System Prompts & Role Definition",
+          "body": "When developers start interacting with Large Language Models (LLMs) via APIs, they quickly realize that a basic text prompt is unpredictable. To build robust software, engineers use 'System Prompts'. A system prompt is a hidden set of meta-instructions sent to the AI before the user's input is processed. It strictly defines the model's persona, its operational boundaries, and its formatting rules.\n\nWithout a system prompt, an LLM defaults to being a helpful, conversational assistant that wants to chat about anything. This is a vulnerability. If you are building a customer service bot for a bank, you don't want the bot casually giving out coding advice or debating politics.\n\nThe system prompt forces the model into a constrained box. By writing explicit rules like 'You are an austere financial assistant. You only answer questions about banking. If asked about outside topics, reply strictly with I cannot help with that.', you fundamentally alter the model's behavior, dramatically reducing hallucinations and locking down the application's scope.",
+          "keyPoints": [
+            "System prompts act as the invisible operating instructions for the LLM's behavior.",
+            "They define the persona, tone, and strict boundaries of what the AI is allowed to do.",
+            "A strong system prompt is the first line of defense against prompt injection and off-topic outputs."
+          ],
+          "example": "If you build an AI coding assistant, your system prompt would be: 'You are an expert Python engineer. Output only valid Python code without any markdown or conversational pleasantries.' When the user types 'Hello', the model just outputs `# Hello`, refusing to break character.",
+          "misconception": "Common mistake: Putting crucial business rules in the user prompt rather than the system prompt. LLM architecture strongly prioritizes instructions placed in the system layer over the user layer, making them much harder for malicious users to override.",
+          "analogy": "Think of it like hiring an actor for a theme park. The user prompt is a tourist asking the actor a question. The system prompt is the legal contract the actor signed before their shift, dictating exactly what character they must play and what they are absolutely forbidden to say."
+        },
+        {
+          "title": "Few-Shot Learning: Show, Don't Just Tell",
+          "body": "One of the most powerful, low-effort ways to instantly improve an LLM's accuracy is a technique called 'Few-Shot Learning'. When you give an LLM instructions and immediately ask it to perform the task, you are doing 'Zero-Shot' prompting. While modern models are good at zero-shot, they often hallucinate specific formatting constraints or drift in tone.\n\nFew-Shot prompting fundamentally changes the game by embedding 2 to 3 perfect examples of the desired input and output directly inside the prompt itself, right before the user's actual request. You are no longer just telling the model what to do; you are showing it exactly what a successful execution looks like.\n\nBecause LLMs are fundamentally pattern-matching engines, providing concrete examples forces the model's internal attention mechanisms to latch onto your specific formatting, tone, and logic patterns. If you need the model to extract sentiment into a specific JSON structure, showing it two examples of that exact JSON structure is infinitely more reliable than writing three paragraphs describing the structure in English.",
+          "keyPoints": [
+            "Zero-shot prompting relies solely on instructions, which can lead to formatting errors.",
+            "Few-shot prompting embeds concrete examples of inputs and outputs inside the prompt.",
+            "Examples force the model to mimic patterns, drastically increasing reliability for API integrations."
+          ],
+          "example": "Instead of saying 'Translate English to French and keep the tone formal,' a Few-Shot prompt includes actual input/output examples: 'Hey man, what's up?' → 'Bonjour monsieur, comment allez-vous?' and 'Where is the bathroom?' → 'Où se trouvent les toilettes?' The model perfectly mimics the formal tone without further instruction.",
+          "misconception": "Common mistake: Thinking you need to fine-tune a model with thousands of records just to change its output format. 95% of the time, providing 5 solid examples in a Few-Shot prompt will achieve the exact same result instantly for zero cost.",
+          "analogy": "Think of it like training a new employee on data entry. You can give them a 50-page manual on how to format the spreadsheet (Zero-Shot), or you can just show them 3 rows that you filled out perfectly yourself (Few-Shot). Showing is always vastly superior to telling."
+        },
+        {
+          "title": "Chain-of-Thought (CoT) & Structured JSON",
+          "body": "When developers ask an LLM to solve a complex reasoning problem (like math or multi-step logic), the model often fails if it tries to output the final answer immediately. In LLM architecture, computing power is tied directly to token generation. If it outputs the answer in one word, it literally only 'thought' for one computational cycle.\n\nChain-of-Thought (CoT) prompting forces the model to slow down. By explicitly adding the phrase 'Think step-by-step' to your prompt, you force the model to output its intermediate reasoning. Generating this scratchpad of text buys the model time—allocating more tokens (compute) to break the problem down—which dramatically increases the accuracy of the final answer.\n\nFurthermore, for an AI to be useful in an enterprise backend, its final answer must be parseable by code. Engineers combine CoT with Structured JSON schemas. You instruct the model to first output its step-by-step reasoning in a 'thinking' key, and then output the final extracted data in a 'result' key. This allows your Python backend to safely `json.loads()` the output and route it to your database.",
+          "keyPoints": [
+            "An LLM's reasoning capability is directly proportional to how many tokens it generates.",
+            "Chain-of-Thought forces the model to output intermediate steps, boosting accuracy.",
+            "Always force the final output into strict JSON so application code can safely parse it."
+          ],
+          "example": "If parsing a legal contract for a termination date, the model first populates a 'reasoning' JSON field: 'The contract starts Jan 1, lasting 36 months, so it ends Jan 1 three years later.' It then populates the 'termination_date' field with '2027-01-01', which your backend securely ingests.",
+          "misconception": "Common mistake: Forcing the model to output ONLY the final JSON answer and hiding the reasoning. If you strip away the space for the model to 'think out loud', complex logic tasks will fail entirely. Always include a 'thought_process' field in your JSON schema.",
+          "analogy": "Think of it like a high school math test. If the teacher forces you to just write the final number in a box (Standard Prompting), you will likely make a mental arithmetic error. If the teacher forces you to show your work on paper (Chain-of-Thought), you catch your own mistakes before finalizing the answer."
+        }
+      ],
+      "example": "system_prompt = \"\"\"You are a senior code reviewer.\\nRules:\\n1. Output strictly valid JSON with keys: \"approved\", \"feedback\", \"severity\".\\n2. Think step-by-step before producing JSON.\"\"\"\n\n# Example of Chain-of-Thought few-shot prompt:\n# Input: 2+3*4 -> Thought: 3*4=12, then 12+2=14 -> Answer: 14",
+      "exercise": "Why does adding \"Think step-by-step\" improve LLM accuracy on math and logic problems?",
+      "answer": "Autoregressive models predict one token at a time. Intermediate reasoning tokens allow the model to build up the computation sequentially.",
+      "checks": [
+        {
+          "question": "What is the difference between Zero-Shot and Few-Shot prompting?",
+          "options": [
+            "Zero-shot fine-tunes weights; few-shot does not",
+            "Few-shot includes examples inside the prompt context",
+            "Zero-shot uses temperature 0"
+          ],
+          "correct": 1,
+          "explanation": "Few-shot prompting provides demonstrations of desired input/output pairs directly in context."
+        },
+        {
+          "question": "What technique forces an LLM to generate intermediate reasoning before the final answer?",
+          "options": [
+            "Chain-of-Thought (CoT)",
+            "Max tokens = 1",
+            "Quantization"
+          ],
+          "correct": 0,
+          "explanation": "Chain-of-Thought prompts the model to break complex problems into sequential reasoning steps."
+        }
+      ],
+      "game": "threshold",
+      "sources": [
+        "prompting",
+        "llm",
+        "course"
+      ]
+    },
+    {
+      "id": "embeddings",
+      "title": "Vector Embeddings & Semantic Search",
+      "track": "GenAI & Agents",
+      "summary": "Turning text into geometric vectors and searching by meaning, not keywords.",
+      "sections": [
+        {
+          "title": "Text as High-Dimensional Vectors",
+          "body": "Computers do not understand English. They cannot comprehend concepts, emotion, or meaning. To make an AI understand text, we must translate words into the only thing computers do understand: numbers. This translation process is done via an 'Embedding Model'.\n\nAn embedding model acts as a massive mathematical dictionary. You pass in a word, a sentence, or an entire document, and it outputs a dense array of floating-point numbers—usually around 1,536 numbers long. This array is called a Vector. These numbers aren't random; they represent the semantic coordinates of that text in a high-dimensional space.\n\nThe genius of the embedding space is that distance equals meaning. The model is trained so that concepts with similar semantic meanings are mathematically pushed close together, while unrelated concepts are pushed far apart. Therefore, an AI doesn't need to 'know' what a dog is; it just knows that the vector for 'dog' is mathematically sitting right next to the vectors for 'puppy', 'bark', and 'pet'.",
+          "keyPoints": [
+            "Embedding models convert unstructured text into arrays of numbers called vectors.",
+            "These vectors represent the exact coordinates of a concept in high-dimensional space.",
+            "Similar concepts are mathematically clustered close together, enabling semantic understanding."
+          ],
+          "example": "If you embed the words 'King', 'Queen', 'Apple', and 'Banana', the computer doesn't know what fruit or royalty is. But in the vector space, the coordinates for King and Queen will be tightly clustered in one corner, while Apple and Banana are clustered far away in another. The famous equation 'King - Man + Woman ≈ Queen' comes directly from this geometry.",
+          "misconception": "Common mistake: Thinking embeddings just match exact keywords. If you embed 'Canine' and 'Dog', they might not share a single letter, but their numerical vectors will be nearly identical because their underlying meaning is the same.",
+          "analogy": "Think of it like GPS coordinates for concepts. If 'New York' is at [40.7, -74.0] and 'Boston' is at [42.3, -71.0], they are close together. Embeddings just add 1,500 more coordinates to map out exactly where a concept lives in the universe of human language."
+        },
+        {
+          "title": "Cosine Similarity & Semantic Distance",
+          "body": "Once you have converted all your company's documents into numerical vectors, how do you actually search through them? In traditional SQL databases, you search using exact string matches or regex. In the AI world, you search using a geometric formula called Cosine Similarity.\n\nCosine similarity measures the mathematical angle between two vectors in space. When a user types a search query like 'how to reset my password', you first run that query through the embedding model to get its vector. Then, you calculate the cosine angle between the query vector and every single document vector in your database.\n\nIf the angle between two vectors is 0 degrees, their cosine similarity is 1.0 (a perfect semantic match). If they point in completely opposite directions, the score drops toward 0. Because this relies entirely on geometric angles rather than text matching, a user can search for 'I lost my login credentials' and perfectly retrieve a document titled 'Password Recovery Guide', even though they share literally zero words.",
+          "keyPoints": [
+            "Cosine similarity is the mathematical engine behind AI semantic search.",
+            "It calculates the angle between a user's query vector and document vectors.",
+            "A score close to 1.0 means highly relevant; a score closer to 0 means unrelated."
+          ],
+          "example": "A customer searches a help desk for 'My screen is totally cracked'. A keyword search fails because the repair manual says 'Display shatter replacement'. Cosine similarity easily connects the two because 'cracked screen' and 'shattered display' point in the exact same mathematical direction in embedding space.",
+          "misconception": "Common mistake: Using standard Euclidean distance (straight-line distance) instead of Cosine distance for text embeddings. Euclidean distance gets confused by document length—a 10-page document looks mathematically far from a 1-sentence query—whereas Cosine purely measures the angle of meaning, ignoring length entirely.",
+          "analogy": "Think of it like pointing telescopes at the night sky. If you and I are both looking at the same star, our telescopes are pointing at the exact same angle (high cosine similarity), regardless of whether you have a massive observatory telescope and I have cheap binoculars."
+        },
+        {
+          "title": "Vector Databases (Chroma, Pinecone, FAISS)",
+          "body": "While calculating cosine similarity is mathematically simple for a few documents, it becomes an infrastructure nightmare at scale. If your company has 10 million embedded documents, and a user submits a search query, your server has to instantly calculate the geometric angle against all 10 million arrays of 1,500 floating-point numbers. A standard SQL database like Postgres will grind to a halt trying to compute this sequentially.\n\nTo solve this, the industry created a new piece of infrastructure: the Vector Database. Technologies like Pinecone, Chroma, and FAISS are specifically engineered to store and search high-dimensional floating-point arrays.\n\nInstead of checking every single document, Vector DBs use advanced indexing algorithms—most notably HNSW (Hierarchical Navigable Small World). HNSW builds a massive, multi-layered graph of your vectors. When a search query enters, it rapidly navigates through the network of nearest neighbors, skipping millions of irrelevant vectors entirely. This allows you to find the top 5 most relevant documents out of billions, in less than 50 milliseconds.",
+          "keyPoints": [
+            "Standard relational databases cannot efficiently compute vector distances at massive scale.",
+            "Vector Databases are purpose-built infrastructure for storing and querying AI embeddings.",
+            "They use algorithms like HNSW to rapidly approximate the closest matches in milliseconds."
+          ],
+          "example": "When you ask Notion AI a question, it doesn't send your entire workspace to the LLM. It takes your question, queries a vector database, retrieves the 3 most geometrically similar paragraphs from your thousands of notes in under 20 milliseconds, and uses only those to answer.",
+          "misconception": "Common mistake: Thinking you have to migrate your entire data architecture to a Vector DB. You usually keep your source-of-truth text in Postgres or AWS S3, and just use the Vector DB as an auxiliary search index, storing only the vectors and a reference ID.",
+          "analogy": "Think of it like looking for a specific book in a massive library. A standard database checks every single book on every single shelf sequentially. A Vector DB is like a hyper-efficient librarian who immediately walks to the correct wing, then the correct aisle, zeroing in on the book instantly."
+        }
+      ],
+      "example": "import numpy as np\n\ndef cosine_similarity(a, b):\n    return np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))\n\n# \"king\" - \"man\" + \"woman\" ≈ \"queen\"\n# vector_db.query(query_embeddings=[q_vec], n_results=5)",
+      "exercise": "Why does semantic vector search beat traditional keyword search for a customer support bot?",
+      "answer": "Users use different vocabulary (e.g., \"my bill is broken\" vs \"invoice discrepancy\"). Vector search matches the underlying intent.",
+      "checks": [
+        {
+          "question": "What does an embedding model output for a given sentence?",
+          "options": [
+            "A single summary word",
+            "A fixed-length vector of floating-point numbers",
+            "A decision tree"
+          ],
+          "correct": 1,
+          "explanation": "Embeddings represent text as continuous vectors in a semantic geometric space."
+        },
+        {
+          "question": "Which metric is standard for measuring similarity between two normalized text embeddings?",
+          "options": [
+            "Mean Squared Error",
+            "Cosine Similarity",
+            "Accuracy score"
+          ],
+          "correct": 1,
+          "explanation": "Cosine similarity measures the angle between vectors, capturing semantic closeness."
+        }
+      ],
+      "game": "clusters",
+      "sources": [
+        "embedding",
+        "w3_ml",
+        "rag"
+      ]
+    },
+    {
+      "id": "generative",
+      "title": "RAG: Retrieval-Augmented Generation",
+      "track": "GenAI & Agents",
+      "summary": "Grounding LLMs in company documents to eliminate hallucinations.",
+      "sections": [
+        {
+          "title": "Why Foundation Models Hallucinate",
+          "body": "To build reliable AI systems, engineers must understand a fundamental truth: Foundation models (like standard GPT-4 or Claude) do not have a database of facts inside them. They are not search engines. They are massive statistical probability engines designed strictly to predict the next most likely word in a sequence based on their original training data.\n\nBecause they are trained to generate fluent, confident-sounding text, they suffer from 'hallucinations'. If you ask a base model about your company's proprietary internal vacation policy, it doesn't know the answer because that data was never on the public internet. However, instead of saying 'I don't know', its neural architecture compels it to string together the most statistically likely words related to 'corporate vacation'. It will confidently invent a fake, highly realistic HR policy.\n\nFor enterprise applications, this is unacceptable. You cannot deploy an AI that convincingly lies to your employees or customers. You must structurally force the LLM to abandon its internal training memory and strictly read from external, factual data that you provide at runtime.",
+          "keyPoints": [
+            "LLMs are next-word prediction engines, not factual knowledge bases.",
+            "Hallucinations happen because the model prioritizes fluent generation over factual accuracy.",
+            "Base models have zero access to private, real-time, or proprietary company data."
+          ],
+          "example": "If a lawyer asks ChatGPT for a summary of a highly niche, obscure legal case from 1982, the model might completely invent fake plaintiff names, fake rulings, and fake quotes that sound entirely plausible, resulting in disastrous legal filings if not caught.",
+          "misconception": "Common mistake: Trying to fix hallucinations by telling the model 'Don't hallucinate' in the prompt. This rarely works, because the model literally cannot distinguish between its valid training data and a statistically generated hallucination—it doesn't know what it doesn't know.",
+          "analogy": "Think of a foundation model like a brilliant improv actor. If you put them on stage and ask them to explain quantum physics, they won't freeze—they will confidently invent a completely coherent, highly entertaining, and totally scientifically inaccurate lecture on the spot."
+        },
+        {
+          "title": "The 3-Step RAG Pipeline",
+          "body": "To completely eliminate hallucinations and allow LLMs to answer questions about private data, the industry relies on an architecture called Retrieval-Augmented Generation (RAG). RAG does not require retraining the model; instead, it injects factual context directly into the prompt on the fly. It operates in three distinct steps.\n\nStep 1 is Ingestion: You take your company's PDFs, wikis, and databases, chop them into small paragraphs (chunks), run them through an embedding model, and store the vectors in a Vector Database. Step 2 is Retrieval: When a user asks a question, you embed their query, search the Vector DB, and retrieve the top 3 most relevant factual paragraphs.\n\nStep 3 is Generation: You construct a system prompt that says, 'Answer the user's question USING ONLY the following provided context. If the answer is not in the context, say you do not know.' You paste the 3 retrieved paragraphs directly into the prompt alongside the user's question, and send it to the LLM. The AI stops guessing and simply acts as a reading-comprehension engine, summarizing the exact facts you dynamically handed to it.",
+          "keyPoints": [
+            "RAG grounds the LLM in factual reality without requiring expensive model retraining.",
+            "It involves chunking documents, retrieving relevant matches via vector search, and generating an answer.",
+            "The LLM is constrained to act purely as a summarization engine over the retrieved context."
+          ],
+          "example": "A Morgan Stanley advisor asks an AI chatbot: 'What were Apple's Q3 revenue numbers?' The RAG pipeline intercepts this, searches the secure Vector DB for 'Apple Q3 Revenue', retrieves the exact paragraph from the official Q3 PDF, pastes it into the prompt unseen, and the LLM confidently answers with the exact, factual dollar amount.",
+          "misconception": "Common mistake: Passing 100 entire PDFs to the LLM at once during Step 3. LLMs have context limits and get confused by massive walls of text (the 'Lost in the Middle' problem). You must retrieve only the specific chunks necessary—typically just 3 to 5 paragraphs.",
+          "analogy": "Think of it like an open-book test. A base LLM takes the test from memory and invents answers when it forgets. RAG gives the student an indexed textbook, forces them to look up the exact page, and restricts them to only writing down what they read."
+        },
+        {
+          "title": "Evaluating RAG Quality",
+          "body": "Building a RAG proof-of-concept takes a weekend, but getting it to production quality takes months. When a RAG system gives a wrong answer, developers must figure out which part of the pipeline failed: was it a failure of Retrieval, or a failure of Generation? To debug this, engineers measure two critical metrics: Context Recall and Faithfulness.\n\nContext Recall measures the Vector Database. When the user asked the question, did our search algorithm actually retrieve the right paragraph from the database? If the required facts never made it into the prompt, the LLM has no chance of answering correctly. Poor recall usually means you need to adjust your embedding model or how you chunked your documents.\n\nFaithfulness measures the LLM. If the Vector Database successfully retrieved the exact factual paragraph, did the LLM stick to it? Or did it ignore the context and hallucinate an answer anyway? If faithfulness is low, you need to aggressively tweak your system prompt to constrain the model, or switch to a more capable reasoning model.",
+          "keyPoints": [
+            "RAG failures must be isolated into either Retrieval errors or Generation errors.",
+            "Context Recall evaluates if the search engine found the correct factual documents.",
+            "Faithfulness evaluates if the LLM strictly adhered to the provided context without hallucinating."
+          ],
+          "example": "If a user asks an internal HR bot 'What is the maternity leave policy?' and the bot hallucinates '12 weeks' instead of '16 weeks', the engineer checks the logs. If the vector DB pulled up the cafeteria menu instead of the HR manual, it's a Recall failure. If the DB pulled up the correct HR manual but the LLM still said 12 weeks, it's a Faithfulness failure.",
+          "misconception": "Common mistake: Blaming the LLM for every bad answer. In production RAG systems, roughly 80% of errors are actually Retrieval failures—the vector database just handed the LLM irrelevant garbage, so the LLM outputted garbage.",
+          "analogy": "Think of it like a lawyer and a paralegal. Context Recall is evaluating if the paralegal (Vector DB) brought the right case files to the desk. Faithfulness is evaluating if the lawyer (LLM) actually read the files or just made up an argument on the spot."
+        }
+      ],
+      "example": "def rag_answer(user_query):\n    # 1. Retrieve top matching chunks\n    context_chunks = vector_db.search(user_query, top_k=3)\n    \n    # 2. Augment prompt with retrieved ground truth\n    prompt = f\"Answer using ONLY this context:\\n{context_chunks}\\n\\nQuestion: {user_query}\"\n    \n    # 3. Generate grounded response\n    return llm.generate(prompt)",
+      "exercise": "A company policy manual updates every week. Why is RAG superior to fine-tuning the model every week?",
+      "answer": "Fine-tuning is expensive, slow, prone to forgetting past data, and does not provide citations. With RAG, you just update the document in the vector DB.",
+      "checks": [
+        {
+          "question": "What is the primary role of Retrieval in a RAG pipeline?",
+          "options": [
+            "To rewrite model weights permanently",
+            "To fetch relevant external facts to include in the context window",
+            "To speed up network bandwidth"
+          ],
+          "correct": 1,
+          "explanation": "Retrieval supplies relevant, up-to-date document chunks into the prompt context."
+        },
+        {
+          "question": "If an LLM gives an answer unsupported by retrieved context, what is this called?",
+          "options": [
+            "Overfitting",
+            "Hallucination",
+            "Regularization"
+          ],
+          "correct": 1,
+          "explanation": "Hallucination is when a model generates claims unsupported by factual evidence."
+        }
+      ],
+      "game": "threshold",
+      "sources": [
+        "rag",
+        "llm",
+        "embedding"
+      ]
+    },
+    {
+      "id": "finetuning",
+      "title": "Fine-Tuning vs RAG vs In-Context",
+      "track": "GenAI & Agents",
+      "summary": "The corporate decision matrix: when to prompt, when to retrieve, and when to train.",
+      "sections": [
+        {
+          "title": "Level 1: In-Context Prompting (Fastest & Cheapest)",
+          "body": "When enterprise teams want to build custom AI, their immediate assumption is often that they need to 'train their own model'. In modern AI engineering, this is almost always the wrong first step. The first tier of customization—and the place where 80% of business problems should be solved—is In-Context Prompting.\n\nIn-Context Prompting simply means passing your specific instructions, tone guidelines, and examples directly in the system prompt at runtime. You do not touch the model's underlying weights. Modern foundation models have massive 'context windows' (e.g., Claude can ingest hundreds of pages of text in a single prompt).\n\nThis approach requires zero infrastructure, zero data science pipelines, and zero maintenance. You just write clear English instructions and embed your data. If you want the AI to write emails that sound like your CEO, you just paste 5 of the CEO's past emails into the prompt and say 'Mimic this style'. Engineers should only move past this level if they hit strict latency constraints, cost barriers, or complex logic that prompting simply cannot fix.",
+          "keyPoints": [
+            "In-context prompting solves the vast majority of AI use cases without retraining models.",
+            "It leverages large context windows to inject data and rules directly at runtime.",
+            "It is the fastest, cheapest, and most maintainable way to customize AI behavior."
+          ],
+          "example": "A legal tech startup wants an AI to summarize contracts. Instead of spending $50,000 fine-tuning a custom legal model, they just write a massive system prompt containing their strict summarization rules and pass the 20-page contract in the API call. It works perfectly on day one.",
+          "misconception": "Common mistake: Assuming 'prompt engineering' is just a gimmick. In reality, writing highly structured, programmatic system prompts with JSON schemas and Few-Shot examples is a rigorous engineering discipline that replaces the need for fine-tuning in most apps.",
+          "analogy": "Think of it like getting a brilliant chef to cook your family recipe. You don't need to send the chef back to culinary school for 4 years to learn it (Fine-Tuning). You just hand them the recipe card right before they start cooking (In-Context Prompting)."
+        },
+        {
+          "title": "Level 2: RAG (Dynamic & Factual Knowledge)",
+          "body": "If In-Context Prompting is so powerful, why move to Level 2? The limitation of standard prompting is scale. If you are building an AI to answer questions across your company's entire 10,000-page knowledge base, you physically cannot paste all 10,000 pages into the prompt every time a user asks a single question. It would exceed the model's token limit, take 30 seconds to process, and cost hundreds of dollars per query.\n\nThis is where Retrieval-Augmented Generation (RAG) becomes mandatory. RAG acts as a dynamic filter. Instead of stuffing the entire knowledge base into the prompt, the system uses a Vector Database to instantly search the 10,000 pages, extract only the three paragraphs relevant to the user's specific question, and injects only those three paragraphs into the prompt.\n\nRAG is the industry standard for any application that relies on large, complex, or frequently changing datasets. Because the knowledge is stored in an external database rather than baked into the AI, updating your company's policy just requires updating a database row, not retraining a neural network.",
+          "keyPoints": [
+            "RAG is required when your dataset is too massive to fit inside a single prompt.",
+            "It dynamically fetches only the relevant facts and injects them at runtime.",
+            "It allows you to update the AI's knowledge base instantly without retraining."
+          ],
+          "example": "An e-commerce site has 500,000 changing products. They can't put the whole catalog in a prompt. When a user asks 'Do you have waterproof tents under $100?', the RAG system queries the database, retrieves the 4 matching tent listings, and feeds just those 4 into the LLM to generate a personalized response.",
+          "misconception": "Common mistake: Fine-tuning a model to teach it your company's proprietary facts. Neural networks are terrible at memorizing raw facts accurately. If you want the model to know specific data, use RAG. If you want it to learn a specific style or format, use Fine-Tuning.",
+          "analogy": "Think of it like a lawyer preparing for trial. Level 1 (Prompting) is carrying all the case files in your briefcase. Level 2 (RAG) is having a massive filing cabinet in the back room, and an assistant who runs back and hands you the exact folder you need right as the judge asks a question."
+        },
+        {
+          "title": "Level 3: Fine-Tuning & LoRA (Style, Format & Tone)",
+          "body": "If RAG handles knowledge, what is Fine-Tuning for? Fine-Tuning is Level 3, used exclusively when you need to fundamentally alter the behavior, tone, or output format of a model in ways that prompting cannot reliably achieve. Fine-tuning actually opens up the model and mathematically adjusts its internal weights based on thousands of examples you provide.\n\nFor instance, if you want an open-source model to output a highly specific, complex, nested JSON structure for thousands of medical records, standard prompting might fail 10% of the time. By fine-tuning the model on 5,000 perfect examples of that exact JSON structure, the model deeply learns the syntax.\n\nHistorically, fine-tuning was incredibly expensive, requiring updates to billions of parameters. Today, engineers use LoRA (Low-Rank Adaptation). Instead of updating the entire massive model, LoRA freezes the main brain and just trains a tiny 'adapter'—a small matrix of weights that attaches to the model. This allows developers to fine-tune massive models on a single GPU in hours, drastically lowering the barrier to custom AI.",
+          "keyPoints": [
+            "Fine-tuning mathematically alters the model's weights to teach it style, format, and tone.",
+            "It should NOT be used to teach the model new factual knowledge (use RAG for that).",
+            "LoRA makes fine-tuning vastly cheaper by only updating a tiny subset of the model's parameters."
+          ],
+          "example": "GitHub Copilot doesn't just use RAG. Microsoft fine-tuned the underlying models on billions of lines of code. The model physically altered its neural pathways to deeply understand syntax, indentation, and logic flow across dozens of programming languages, allowing it to generate code flawlessly.",
+          "misconception": "Common mistake: Assuming you need millions of data points to fine-tune. With modern techniques like LoRA, you can effectively fine-tune a model to adopt a specific tone or JSON format with just 500 to 1,000 highly curated, high-quality examples.",
+          "analogy": "Think of it like training a musician. RAG is handing a classically trained pianist sheet music for a jazz song—they can play it, but it might sound rigid. Fine-tuning is sending them to a jazz conservatory for a year until the swinging rhythm becomes permanently baked into their muscle memory."
+        }
+      ],
+      "example": "# DECISION MATRIX:\n# Need new facts / changing docs? -> Use RAG\n# Need specific tone / complex formatting / lower latency? -> Fine-Tune (LoRA)\n# Need quick prototype / few examples? -> In-Context Prompting",
+      "exercise": "A hospital wants an AI to format doctor notes into a proprietary medical EHR shorthand. RAG or Fine-Tuning?",
+      "answer": "Fine-tuning! The model needs to adopt a specialized syntax and formatting behavior across thousands of examples.",
+      "checks": [
+        {
+          "question": "What is fine-tuning an LLM best suited for?",
+          "options": [
+            "Injecting weekly updated news articles",
+            "Teaching a specialized tone, style, or output structure",
+            "Replacing vector databases"
+          ],
+          "correct": 1,
+          "explanation": "Fine-tuning adapts model behavior, style, and syntax, while retrieval provides dynamic facts."
+        },
+        {
+          "question": "Which technique requires zero GPU retraining and gives immediate verifiable citations?",
+          "options": [
+            "Pre-training from scratch",
+            "RAG (Retrieval-Augmented Generation)",
+            "Full-parameter fine-tuning"
+          ],
+          "correct": 1,
+          "explanation": "RAG retrieves source documents directly without model retraining."
+        }
+      ],
+      "game": "overfit",
+      "sources": [
+        "llm",
+        "eval",
+        "pitfalls"
+      ]
+    },
+    {
+      "id": "agents",
+      "title": "Agentic AI & Tool Use (ReAct & MCP)",
+      "track": "GenAI & Agents",
+      "summary": "The frontier: autonomous multi-step reasoning, tool APIs, and workflows.",
+      "sections": [
+        {
+          "title": "The ReAct Loop: Thought, Action, Observation",
+          "body": "Historically, LLMs were strictly conversational: you ask a question, they return text, and the interaction ends. Agentic AI fundamentally breaks this limitation, giving models the ability to execute tasks over time. The core architecture that enables this autonomy is the ReAct loop (Reasoning and Acting).\n\nInstead of generating a final answer immediately, a ReAct agent operates in a continuous loop. First, it generates a 'Thought', breaking down the user's goal into a logical plan. Second, it generates an 'Action', deciding to trigger an external tool (like a web search or a Python script) to gather information. Third, it receives an 'Observation', reading the results that the tool returned.\n\nThe agent then loops back to step one. It uses the new observation to update its reasoning, plans its next action, and fires another tool. This loop continues autonomously until the agent determines it has fully satisfied the user's original request. This fundamentally transforms the LLM from a passive answering machine into an active, autonomous worker capable of solving multi-step problems.",
+          "keyPoints": [
+            "Agents move beyond static text generation by autonomously looping through steps.",
+            "The ReAct framework dictates a cycle of Thought (plan), Action (execute tool), and Observation (analyze result).",
+            "The loop only terminates when the agent successfully verifies the final goal is met."
+          ],
+          "example": "A user asks an agent, 'What is the weather in Paris, and email me packing advice.' The Agent thinks: 'I need weather first.' Action: Calls Weather API. Observation: It's raining. Thought: 'Now I need to send the email.' Action: Calls Gmail API with rain advice. Observation: Email sent. Thought: 'Task complete.'",
+          "misconception": "Common mistake: Assuming the LLM itself is running the loop. The LLM is just a text generator; the 'loop' is actually a Python while-loop written by a developer orchestrating the calls to the LLM and the external APIs.",
+          "analogy": "Think of it like a chef in a kitchen. Thought: 'I need to make soup, but I don't know if the broth is hot.' Action: Tastes the broth. Observation: 'It's cold.' Thought: 'I need to turn up the heat.' Action: Turns dial. They loop this process until the soup is perfect."
+        },
+        {
+          "title": "Function Calling & Tool Execution",
+          "body": "For an AI agent to take an 'Action' in the real world, it needs a bridge between human language and backend code. This bridge is called 'Function Calling' (or Tool Use).\n\nAs a developer, you write a standard function in your backend—like `execute_sql(query)` or `charge_credit_card(amount)`. You then provide the LLM with a strictly typed JSON Schema that describes exactly what this function does and what arguments it requires. When the user asks the agent to perform a task, the LLM realizes it needs outside help. Instead of responding with conversational English, the model intelligently halts and outputs a highly structured JSON object, requesting to call your function with specific parameters.\n\nCrucially, the AI itself does not execute code. It has no hands. It simply generates the JSON request. Your backend intercepts this JSON, safely executes the Python/Node code on your secure servers, and then feeds the resulting data back into the LLM as an 'Observation'. This strict separation of concerns keeps your infrastructure secure while giving the AI unlimited capabilities.",
+          "keyPoints": [
+            "Function Calling allows an LLM to reliably trigger external code and APIs.",
+            "Developers provide JSON schemas defining the available tools; the LLM outputs JSON requesting a call.",
+            "The LLM never runs code directly; your backend executes the code and returns the result."
+          ],
+          "example": "A user says to a shopping AI, 'Buy the blue shoes.' The AI outputs a JSON object: {\"tool\": \"checkout\", \"args\": {\"item\": \"blue_shoes\", \"qty\": 1}}. The backend Python server parses this, hits the Stripe API, charges the card, and hands the success receipt back to the AI.",
+          "misconception": "Common mistake: Believing that giving an AI a tool is a security risk because the AI will 'hack' your system. The AI cannot execute anything—it only generates text strings. Your backend code is in complete control of validating the arguments and executing actual database changes.",
+          "analogy": "Think of it like an executive sitting in a boardroom without a laptop. The executive (the LLM) cannot physically update a spreadsheet. Instead, they write a specific request on a piece of paper (the JSON object) and hand it to an assistant (your backend code) who actually types the data into the computer."
+        },
+        {
+          "title": "Model Context Protocol (MCP) & Multi-Agent Systems",
+          "body": "As developers build more complex agents, managing dozens of API integrations becomes a massive bottleneck. Every company writes their own custom bridging logic for Slack, GitHub, and Postgres. To solve this, the industry introduced the Model Context Protocol (MCP). MCP is an open-source standard—similar to how USB standardizes hardware—that provides a universal language for AI models to connect to external data sources and tools.\n\nWith MCP, an agent can instantly connect to an MCP-compliant database or filesystem without the developer writing custom integration code. This standardization paves the way for Multi-Agent Systems. Instead of having one massive 'God Agent' trying to do everything, you build specialized micro-agents.\n\nIn a multi-agent system, a 'Manager Agent' talks to the user and breaks down the project. It then delegates the database work to a specialized 'SQL Agent' (connected via MCP to Postgres), and delegates the coding to a 'Python Agent' (connected via MCP to GitHub). These agents collaborate, debate, and pass JSON messages to each other, forming a digital assembly line that executes incredibly complex enterprise workflows.",
+          "keyPoints": [
+            "MCP is an open standard that universally connects AI models to external tools and data.",
+            "Multi-agent systems replace single monolithic bots with specialized, collaborative micro-agents.",
+            "Agents can route tasks, delegate sub-problems, and review each other's work autonomously."
+          ],
+          "example": "A user asks to 'Analyze Q3 revenue and build a web dashboard.' The Manager Agent assigns the analysis to the Data Agent (which uses MCP to query Snowflake). Once done, it passes the data to the Code Agent, which writes the React code and pushes it to GitHub—all completely autonomously.",
+          "misconception": "Common mistake: Thinking multi-agent systems are sci-fi sentience. Under the hood, they are just traditional microservice architectures, where the 'services' happen to be LLMs passing strictly typed JSON messages back and forth over standard HTTP protocols.",
+          "analogy": "Think of it like building a house. You don't hire one person to do the plumbing, electrical, and framing simultaneously. You hire a General Contractor (Manager Agent) who delegates the pipes to the plumber and the wires to the electrician, managing their communication until the house is finished."
+        }
+      ],
+      "example": "# The ReAct Agent Loop\nwhile not task_completed:\n    thought = agent.plan(history)\n    action = agent.decide_tool(thought)\n    if action.is_final_answer:\n        break\n    observation = execute_tool(action.tool_name, action.args)\n    history.append({\"action\": action, \"observation\": observation})",
+      "exercise": "Why can an AI agent solve tasks that a raw LLM cannot?",
+      "answer": "Because agents can interact with the external world: running code, checking live databases, browsing web pages, and self-correcting mistakes.",
+      "checks": [
+        {
+          "question": "What are the core steps of the ReAct agent framework?",
+          "options": [
+            "Train, Test, Split",
+            "Thought, Action, Observation",
+            "Embed, Cluster, Reduce"
+          ],
+          "correct": 1,
+          "explanation": "ReAct interleaves reasoning (Thought) with executing tools (Action) and checking results (Observation)."
+        },
+        {
+          "question": "How does an LLM interact with external databases or APIs?",
+          "options": [
+            "It directly modifies hardware memory",
+            "It emits structured function call requests that the host application executes",
+            "It retrains its neural weights"
+          ],
+          "correct": 1,
+          "explanation": "The model outputs structured tool call JSON, and the host environment runs the function and returns results."
+        }
+      ],
+      "game": "boundary",
+      "sources": [
+        "agents",
+        "llm",
+        "course"
+      ]
+    }
+  ],
+  "games": [
+    {
+      "id": "boundary",
+      "title": "Draw the Boundary",
+      "concept": "Classification",
+      "description": "Adjust a separating line and inspect its mistakes.",
+      "chapter": "foundations",
+      "kind": "Synthetic points",
+      "goal": "Find a boundary that separates the two classes with high accuracy.",
+      "sources": [
+        "linear"
+      ]
+    },
+    {
+      "id": "overfit",
+      "title": "Overfitting Playground",
+      "concept": "Generalisation",
+      "description": "Compare a flexible fit with the signal beneath the noise.",
+      "chapter": "evaluation",
+      "kind": "Constructed illustration",
+      "goal": "Compare low, medium, and high flexibility. Explain why zero training error can mislead.",
+      "sources": [
+        "eval"
+      ]
+    },
+    {
+      "id": "threshold",
+      "title": "Threshold Tuner",
+      "concept": "Precision & recall",
+      "description": "Make a decision threshold visible through a confusion matrix.",
+      "chapter": "evaluation",
+      "kind": "Synthetic scores",
+      "goal": "Reach at least 80% recall. Observe what happens to precision.",
+      "sources": [
+        "metrics"
+      ]
+    },
+    {
+      "id": "gradient",
+      "title": "Gradient Descent",
+      "concept": "Optimisation",
+      "description": "Take real gradient steps and see convergence or divergence.",
+      "chapter": "linear",
+      "kind": "Exact quadratic objective",
+      "goal": "Reach a loss below 0.01 without diverging.",
+      "sources": [
+        "gradient"
+      ]
+    },
+    {
+      "id": "clusters",
+      "title": "Cluster Detective",
+      "concept": "K-means",
+      "description": "Step through assignment and centroid updates.",
+      "chapter": "clustering",
+      "kind": "Synthetic points",
+      "goal": "Run iterations to convergence, then compare k = 2 and k = 3.",
+      "sources": [
+        "cluster"
+      ]
+    },
+    {
+      "id": "iris",
+      "title": "Iris Model Lab",
+      "concept": "Nearest neighbours",
+      "description": "Train and evaluate a classifier on published flower measurements.",
+      "chapter": "problems",
+      "kind": "Real UCI dataset",
+      "goal": "Compare k = 1, 5, and 15 on the fixed holdout. Inspect the confusion matrix.",
+      "sources": [
+        "iris",
+        "intro"
+      ]
+    }
+  ],
+  "challenges": [
+    {
+      "id": "sales",
+      "question": "A shop wants to predict next month’s sales.",
+      "options": [
+        "Use a seasonal or recent-sales baseline and evaluate on later months.",
+        "Shuffle all months and evaluate training accuracy.",
+        "Choose the biggest network first."
+      ],
+      "correct": 0,
+      "explanation": "Time order matters. Future prediction needs a split that reflects the future.",
+      "chapter": "linear"
+    },
+    {
+      "id": "rare",
+      "question": "Only 1% of messages are urgent. A model predicts “not urgent” every time.",
+      "options": [
+        "Launch because accuracy is 99%.",
+        "Inspect urgent-case recall and precision, not just overall accuracy.",
+        "Report accuracy with more decimals."
+      ],
+      "correct": 1,
+      "explanation": "The system misses every urgent message. High accuracy hides that failure.",
+      "chapter": "evaluation"
+    },
+    {
+      "id": "groups",
+      "question": "You have purchase histories but no segment labels.",
+      "options": [
+        "Explore clustering after deciding how to represent similarity.",
+        "Regress against customer ID.",
+        "Claim discovered clusters are objectively true customer types."
+      ],
+      "correct": 0,
+      "explanation": "Clustering explores structure; the representation and interpretation matter.",
+      "chapter": "clustering"
+    },
+    {
+      "id": "leakage",
+      "question": "A default model uses collections status recorded after default.",
+      "options": [
+        "Keep it because it improves accuracy.",
+        "Remove this future-derived feature and re-evaluate.",
+        "Add more layers."
+      ],
+      "correct": 1,
+      "explanation": "The information is unavailable at the intended prediction time.",
+      "chapter": "foundations"
+    },
+    {
+      "id": "memorise",
+      "question": "A model memorises every training example.",
+      "options": [
+        "Compare with a baseline on representative unseen data.",
+        "Trust its perfect training score.",
+        "Assume more memory means better reasoning."
+      ],
+      "correct": 0,
+      "explanation": "Generalisation, not memorisation, is the goal.",
+      "chapter": "evaluation"
+    },
+    {
+      "id": "handbook",
+      "question": "A handbook changes every week. Employees need supported answers.",
+      "options": [
+        "Fine-tune once and assume the facts stay current.",
+        "Try permission-aware retrieval with answer-support evaluation.",
+        "Disable citations to reduce clutter."
+      ],
+      "correct": 1,
+      "explanation": "Retrieval can supply changing documents; it still needs quality checks.",
+      "chapter": "generative"
+    },
+    {
+      "id": "scale",
+      "question": "A distance model uses annual income and a 0–1 satisfaction score.",
+      "options": [
+        "Investigate scaling within each training fold.",
+        "Assume units never matter.",
+        "Scale using the whole dataset before splitting."
+      ],
+      "correct": 0,
+      "explanation": "Magnitude can dominate distance. Learn transformations only on training data.",
+      "chapter": "clustering"
+    },
+    {
+      "id": "tabular",
+      "question": "You have 3,000 labelled rows and limited compute.",
+      "options": [
+        "Assume deep learning must win.",
+        "Start with simple baselines and compare suitable tabular models.",
+        "Choose by training score only."
+      ],
+      "correct": 1,
+      "explanation": "The dataset, evaluation, and constraints should drive the choice.",
+      "chapter": "trees"
+    },
+    {
+      "id": "prompt",
+      "question": "An LLM returns unpredictable conversational responses when you need strict database JSON.",
+      "options": [
+        "Enforce a structured JSON output schema and provide few-shot examples.",
+        "Increase temperature to 1.5.",
+        "Add more exclamation points to the prompt."
+      ],
+      "correct": 0,
+      "explanation": "Structured schema enforcement and few-shot formatting reliably constrain LLM output.",
+      "chapter": "prompting"
+    },
+    {
+      "id": "agent",
+      "question": "An autonomous AI agent gets stuck calling the same failing tool repeatedly.",
+      "options": [
+        "Run the agent in an infinite loop.",
+        "Implement a maximum retry step limit and reflection/fallback loop.",
+        "Disable logging to reduce token count."
+      ],
+      "correct": 1,
+      "explanation": "Production agents require loop breakers, max iteration limits, and reflection fallbacks.",
+      "chapter": "agents"
+    }
+  ]
+}

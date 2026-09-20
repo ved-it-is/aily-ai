@@ -1,0 +1,20 @@
+{
+  "version": 2,
+  "public": true,
+  "cleanUrls": true,
+  "buildCommand": "node scripts/build.mjs",
+  "outputDirectory": "dist",
+  "routes": [
+    {
+      "src": "/api/questions(.*)",
+      "dest": "/data/questions.json"
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
+}
