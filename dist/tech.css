@@ -2275,3 +2275,62 @@ button {
 .learning-story { margin:26px 0 32px; padding:clamp(20px,3vw,30px); border:1px solid var(--line); border-radius:18px; background:#fff; box-shadow:0 8px 24px rgba(24,38,74,.04); }.learning-story-heading { max-width:650px; }.learning-story-heading h2 { margin:6px 0 8px; font-size:clamp(23px,3vw,31px); }.learning-story-heading p { margin:0; font-size:15px; }.story-steps { display:grid; grid-template-columns:repeat(5,1fr); gap:10px; margin:22px 0 16px; }.story-step { min-height:104px; padding:14px; border:1px solid #e3e6ef; border-radius:12px; background:#fafbff; color:var(--text-main); text-align:left; }.story-step span { display:grid; width:27px; height:27px; place-items:center; margin-bottom:10px; border-radius:50%; background:#ede9fe; color:var(--purple); font:700 11px 'IBM Plex Mono',monospace; }.story-step strong { display:block; font-size:13px; line-height:1.25; }.story-step:hover,.story-step.active { border-color:var(--purple); background:#f5f3ff; }.story-step.active span { background:var(--purple); color:#fff; }.story-detail { display:grid; grid-template-columns:minmax(0,1.5fr) minmax(220px,.8fr); gap:22px; padding:20px; border-radius:13px; background:#f8f9ff; border:1px solid #e6e8f4; }.story-detail h3 { margin:5px 0 7px; font-size:21px; }.story-detail p { margin:0; font-size:14px; }.story-analogy { align-self:center; padding:14px; border-left:3px solid #83d9ff; background:#fff; color:#475569; font-size:13px; line-height:1.55; }.story-analogy strong { display:block; margin-bottom:4px; color:#2563eb; font-size:11px; letter-spacing:.04em; text-transform:uppercase; }
 @media (max-width:900px) { aside { position:static; width:100%; padding:16px 20px; border-right:0; border-bottom:1px solid var(--line); }.workspace { margin-left:0; }.tagline,.nav-label,.sidebar-bottom { display:none; }.logo { font-size:36px; }.logo span { font-size:21px; } nav { display:flex; gap:6px; margin-top:14px; overflow-x:auto; padding-bottom:2px; scrollbar-width:thin; } nav > a,.nav-accordion-summary { flex:0 0 auto; white-space:nowrap; padding:9px 11px; }.nav-accordion { flex:0 0 auto; } header { padding:0 24px; } main { padding:26px 22px 42px; }.editorial-hero { grid-template-columns:1.15fr .85fr; }.story-steps { grid-template-columns:repeat(3,1fr); } }
 @media (max-width:640px) { header { height:54px; padding:0 16px; }.profile { gap:8px; }.profile button { display:none; } main { padding:18px 14px 32px; } footer { padding:20px 14px; gap:8px; flex-direction:column; align-items:flex-start; }.editorial-hero { grid-template-columns:1fr; padding:24px 20px; border-radius:16px; }.editorial-art { min-height:210px; }.editorial-hero h1 { font-size:36px; letter-spacing:-1.4px; }.story-steps { grid-template-columns:1fr 1fr; }.story-step { min-height:88px; padding:12px; }.story-detail { grid-template-columns:1fr; gap:14px; padding:16px; }.gallery-hero-grid,.step-grid,.cards,.acred-badges { grid-template-columns:1fr; }.step-card { padding:20px; } }
+
+/* ── Site-wide device support: phones, tablets, touch laptops ─────────── */
+html, body { max-width: 100%; overflow-x: clip; }
+main, #app, .workspace, .card, .lesson, .arcade-q-card, .role-detail, .acred-progress-card { min-width: 0; }
+img, svg, canvas, video { max-width: 100%; }
+input, select, textarea { max-width: 100%; }
+button, .button, .edition, .track-tab, .role-btn, .arcade-cat-pill { touch-action: manipulation; }
+
+@media (max-width: 900px) {
+  .page-heading { gap: 12px; flex-wrap: wrap; }
+  .lesson-layout, .two-col, .brain-grid, .flow-detail-box { grid-template-columns: 1fr; }
+  .topic-nav { position: static; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .gallery-hero-grid, .acred-grid { grid-template-columns: 1fr; }
+  .acred-progress-card { padding: 24px; }
+  .track-tabs, .role-pills { display: flex; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 4px; }
+  .track-tab, .role-btn { flex: 0 0 auto; }
+}
+
+@media (max-width: 640px) {
+  h1 { font-size: clamp(25px, 8vw, 32px); line-height: 1.13; }
+  h2 { line-height: 1.25; }
+  .page-heading > .edition { margin-left: 0; }
+  .lesson, .quiz, .arcade-q-card, .brain-box { padding: 16px; border-radius: 12px; }
+  .lesson h2 { font-size: 20px; }
+  .lesson p { font-size: 14px; }
+  pre { padding: 13px; font-size: 12px; }
+  .topic-nav { grid-template-columns: 1fr; }
+  .topic-nav a { border: 1px solid var(--line); background: #fff; }
+  .arcade-top-stats { padding: 16px; align-items: stretch; gap: 12px; }
+  .arcade-stat-item { min-width: 42%; }
+  .arcade-top-stats > div:last-child { width: 100%; }
+  #arcade-sprint-btn { width: 100%; justify-content: center; }
+  .arcade-search-bar { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .arcade-search-input { width: 100%; min-width: 0; }
+  .arcade-diff-list { width: 100%; overflow-x: auto; justify-content: flex-start; }
+  .arcade-diff-list > span { flex: 0 0 auto; }
+  .arcade-diff-btn { flex: 0 0 auto; padding: 7px 11px; }
+  .arcade-cat-list { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 5px; }
+  .arcade-cat-pill { flex: 0 0 auto; }
+  .arcade-q-header > div { flex-wrap: wrap; min-width: 0; }
+  .arcade-q-header > span { max-width: 100%; overflow-wrap: anywhere; }
+  .arcade-opt-btn { align-items: flex-start; padding: 12px; line-height: 1.45; }
+  .arcade-pager { align-items: stretch; gap: 8px; margin: 24px 0; flex-wrap: wrap; }
+  .arcade-pager .button { flex: 1 1 145px; }
+  .arcade-page-info { order: -1; width: 100%; text-align: center; }
+  .role-pills { display: grid; grid-template-columns: 1fr; overflow: visible; }
+  .role-btn { width: 100%; justify-content: flex-start; white-space: normal; }
+  .track-tabs { gap: 8px; }
+  .track-tab { white-space: nowrap; }
+  .acred-progress-card, .acred-cert-card { padding: 20px; }
+  .acred-badges, .cert-pillars { grid-template-columns: 1fr; }
+  .cert-backdrop { padding: 10px; align-items: flex-start; }
+  .cert-modal { padding: 14px; max-height: calc(100vh - 20px); }
+  .cert-modal-toolbar, .cert-footer { align-items: flex-start; gap: 12px; flex-wrap: wrap; }
+  .cert-recipient { font-size: clamp(26px, 9vw, 38px); overflow-wrap: anywhere; }
+  .cert-sig-block { min-width: min(180px, 100%); }
+  .welcome-gateway-card { width: calc(100% - 24px); max-height: calc(100vh - 24px); overflow-y: auto; }
+  .welcome-title { font-size: 22px; }
+}
