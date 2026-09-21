@@ -9,6 +9,10 @@
 
   let client = null;
 
+  function isMissingSession(error) {
+    return error?.name === 'AuthSessionMissingError' || error?.message === 'Auth session missing!';
+  }
+
   function initSupabase() {
     if (window.supabase && DEFAULT_CONFIG.url && DEFAULT_CONFIG.anonKey) {
       try {
@@ -44,7 +48,7 @@
   async function loadSupabaseProgress() {
     if (!client) return [];
     const { data: { user }, error: userError } = await client.auth.getUser();
-    if (userError) throw userError;
+    if (userError && !isMissingSession(userError)) throw userError;
     if (!user) return [];
     const { data, error } = await client
       .from('user_progress')
@@ -81,7 +85,7 @@
     async getUser() {
       if (!client) return null;
       const { data: { user }, error } = await client.auth.getUser();
-      if (error) throw error;
+      if (error && !isMissingSession(error)) throw error;
       return user;
     },
     loadProgress() {
