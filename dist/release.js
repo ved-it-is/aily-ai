@@ -966,6 +966,31 @@ function wireRoadmap(){
   });
 }
 
+const chapterSupport={
+  foundations:{time:'18 min',lab:'Decision Boundary Lab',goal:'Turn a real problem into inputs, a target, and a simple prediction rule.',steps:['Write down the inputs available before a decision is made.','Name the single outcome you want to predict.','Check whether the inputs can realistically separate the outcomes.'],hint:'In the boundary lab, move the line slowly. Watch which examples change from correct to incorrect and ask what information the line is using.'},
+  linear:{time:'20 min',lab:'Regression Playground',goal:'Predict a number and notice when a straight-line trend is a useful baseline.',steps:['Put the quantity to predict on the y-axis.','Look for an overall trend before trying a complex curve.','Compare prediction errors instead of judging by a pretty chart.'],hint:'A good first model does not need to be perfect—it needs to give you a comparison point.'},
+  problems:{time:'20 min',lab:'Decision Boundary Lab',goal:'Choose classification when the answer is a category and regression when it is a number.',steps:['Ask whether the output is a label or a measurement.','Choose the costliest mistake: false positive or false negative.','Use a threshold only after looking at the trade-off.'],hint:'In the lab, a boundary is just the rule that turns input values into one of two labels.'},
+  trees:{time:'22 min',lab:'Tree Split Explorer',goal:'Understand how repeated if/else questions create a decision tree.',steps:['Start with the feature that makes the cleanest first split.','Check whether each branch reduces mixed outcomes.','Stop before tiny groups become rules for noise.'],hint:'If a split only helps one or two examples, it may be memorising rather than learning.'},
+  ensembles:{time:'22 min',lab:'Model Comparison Lab',goal:'See why combining many imperfect models can be steadier than trusting one.',steps:['Establish a simple baseline first.','Compare models on the same held-out examples.','Prefer a reliable improvement over a dramatic training score.'],hint:'Boosting pays extra attention to earlier mistakes; that can help, but it can also chase noise.'},
+  clustering:{time:'22 min',lab:'K-Means Sandbox',goal:'Group similar examples without pretending the groups are automatically meaningful.',steps:['Pick features that describe meaningful similarity.','Scale features so one unit does not dominate distance.','Inspect the cluster centres and name them only after checking the data.'],hint:'In K-Means, move the centres and watch memberships change. That is the core loop: assign, average, repeat.'},
+  evaluation:{time:'24 min',lab:'Overfitting Playground',goal:'Recognise when a model learns the signal versus memorises the training data.',steps:['Keep unseen examples aside before tuning.','Compare training performance with unseen performance.','Use the metric that matches the real mistake you care about.'],hint:'In the overfitting lab, increase complexity slowly. The useful point is where the curve captures the trend without chasing every dot.'},
+  prompting:{time:'16 min',lab:'Prompt Workshop',goal:'Give a model a clear task, context, constraints, and an output format.',steps:['State the role and exact task.','Provide only the context needed for the answer.','Specify what a successful output looks like.'],hint:'Change one prompt element at a time so you can tell what improved the result.'},
+  embeddings:{time:'20 min',lab:'Semantic Search Explorer',goal:'Use meaning-based similarity rather than exact keyword matching.',steps:['Embed both documents and queries with the same model.','Retrieve the closest candidates first.','Read the top results to verify relevance.'],hint:'Similar vectors are not proof of truth—they are a useful way to find likely relevant material.'},
+  generative:{time:'22 min',lab:'RAG Builder',goal:'Ground a response in retrieved evidence before generating an answer.',steps:['Retrieve a small set of relevant passages.','Give the passages and question to the model together.','Ask it to say when the evidence is missing.'],hint:'When a RAG answer is weak, check retrieval before blaming generation.'},
+  finetuning:{time:'20 min',lab:'Adaptation Planner',goal:'Choose the lightest method that solves the actual product problem.',steps:['Use prompting for instructions that change often.','Use RAG for private or frequently updated knowledge.','Consider fine-tuning only for repeatable behaviour or style.'],hint:'Ask: is the missing piece knowledge, instruction, or behaviour? That question narrows the choice quickly.'},
+  agents:{time:'24 min',lab:'Agent Safety Simulator',goal:'Break a large task into tools, checks, and stopping conditions.',steps:['Define the tool each step may use.','Validate tool output before the next action.','Set a maximum number of steps and a safe fallback.'],hint:'An agent is not magic autonomy: it is a loop with explicit permissions, observations, and limits.'}
+};
+
+function renderChapterLabPrep(c){
+  const support=chapterSupport[c.id]||{time:'20 min',lab:'Practice Lab',goal:'Connect this concept to a small, observable experiment.',steps:['Identify the inputs.','Try one small change.','Explain what changed and why.'],hint:'Change one control at a time and write down what you observe.'};
+  return `<section class="lab-prep-card"><div><span class="section-kicker">LAB PREP · ${esc(support.lab.toUpperCase())}</span><h2>Before you open the lab</h2><p>${esc(support.goal)}</p></div><div class="lab-prep-steps">${support.steps.map((step,index)=>`<div><span>${index+1}</span><p>${esc(step)}</p></div>`).join('')}</div><div class="lab-prep-hint"><strong>How to approach it</strong><p>${esc(support.hint)}</p></div></section>`;
+}
+
+function renderLearningCompass(next,completedCount){
+  const support=chapterSupport[next.id]||{time:'20 min',lab:'Practice Lab'};
+  return `<section class="learning-compass"><div><span class="section-kicker">YOUR NEXT BEST STEP</span><h2>${completedCount?'Continue where you left off':'Start here: build the foundation'}</h2><p>${completedCount?`Pick up with <strong>${esc(next.title)}</strong> and keep your momentum.`:`Begin with <strong>${esc(next.title)}</strong>. It gives you the vocabulary needed for the first labs.`}</p><div class="compass-meta"><span>◷ ${support.time}</span><span>🧪 Then: ${esc(support.lab)}</span></div><a class="button" href="#chapter/${next.id}">${completedCount?'Continue chapter':'Start first lesson'} →</a></div><div class="compass-progress"><strong>${completedCount} / ${catalog.chapters.length}</strong><span>chapters complete</span><div><i style="width:${completedCount/catalog.chapters.length*100}%"></i></div></div></section>`;
+}
+
 home=function(){
   const n=catalog.chapters.filter(c=>done(c.id)).length;
   const next=catalog.chapters.find(c=>!done(c.id))||catalog.chapters[0];
@@ -976,6 +1001,8 @@ home=function(){
 
     <!-- Clear five-step AI learning guide -->
     ${renderLearningStory()}
+
+    ${renderLearningCompass(next,n)}
 
     <!-- 3-Step Guided Journey -->
     <div class="step-journey-wrap">
@@ -1082,6 +1109,7 @@ chapter=function(id){
   const chapterNum = String(catalog.chapters.indexOf(c)+1).padStart(2,'0');
   const trackLink = c.track==='GenAI & Agents'?'genai':'learn';
   const isComplete = done(id);
+  const support = chapterSupport[c.id]||{time:'20 min',lab:'Practice Lab'};
 
   // Build concept step cards HTML — supports both old array format and new rich object format
   const conceptsHtml = c.sections.map((s,i)=>{
@@ -1211,6 +1239,7 @@ chapter=function(id){
         <p class="section-kicker">${esc(c.track.toUpperCase())} · CHAPTER ${chapterNum}</p>
         <h1>${esc(c.title)}</h1>
       </div>
+      <span class="edition">◷ ${esc(support.time)} · ${esc(support.lab)}</span>
     </div>
     <p style="margin-bottom:24px">${esc(c.summary)}</p>
 
@@ -1242,6 +1271,7 @@ chapter=function(id){
 
     <!-- STAGE 3: TRY IT — Experiment Link -->
     <div id="stage-try" class="stage-panel" style="display:none">
+      ${renderChapterLabPrep(c)}
       <div class="concept-step-card" style="min-height:auto;text-align:center;align-items:center;padding:48px 40px">
         <span style="font-size:52px;margin-bottom:16px;display:block">🧪</span>
         <span class="concept-step-eyebrow">STAGE 03 · INTERACTIVE EXPERIMENT</span>
