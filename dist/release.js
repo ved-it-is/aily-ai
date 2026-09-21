@@ -281,7 +281,7 @@ const flowStages = [
 
 let selectedFlowStage = flowStages[0];
 
-function renderFramedAiPainting(){
+function renderLegacyFramedAiPainting(){
   return `
     <div class="gallery-hero-grid">
       <!-- Left: Framed Painting -->
@@ -684,7 +684,7 @@ function wireBrainSim(){
   update();
 }
 
-function renderInteractiveAiWidget(){
+function renderLegacyInteractiveAiWidget(){
   return `
     <div class="galaxy-card">
       <div class="galaxy-header">
@@ -744,7 +744,7 @@ function renderInteractiveAiWidget(){
   `;
 }
 
-function wireInteractiveAiWidget(){
+function wireLegacyInteractiveAiWidget(){
   const btnGalaxy = document.getElementById('view-galaxy-btn');
   const btnFlow = document.getElementById('view-flow-btn');
   const btnSim = document.getElementById('view-sim-btn');
@@ -930,6 +930,30 @@ function renderRoleDetail(r){
   `;
 }
 
+/* Homepage v2: a calm editorial introduction and a plain-language learning guide. */
+function renderEditorialHero(){
+  return `<section class="editorial-hero" aria-labelledby="editorial-title"><div class="editorial-copy"><span class="section-kicker">AILY · A PRACTICAL AI LEARNING SPACE</span><h1 id="editorial-title">Learn the pattern<br>behind the <em>magic.</em></h1><blockquote>“AI becomes less mysterious when you can see the small decisions that make it learn.”</blockquote><p>Build intuition through short lessons, visual experiments, and practical questions—one clear idea at a time.</p><div class="museum-actions"><a class="button" href="#chapter/foundations">Start learning <span>→</span></a><a class="edition" href="#python">Explore Python basics ↗</a></div></div><div class="editorial-art" aria-hidden="true"><div class="art-orbit orbit-one"></div><div class="art-orbit orbit-two"></div><div class="art-sun">AI</div><span class="art-note note-one">curiosity</span><span class="art-note note-two">pattern</span><span class="art-note note-three">practice</span></div></section>`;
+}
+
+function renderStoryDetail(stage){
+  return `<div><span class="section-kicker">STEP ${stage.num} · ${esc(stage.short)}</span><h3>${esc(stage.title)}</h3><p>${esc(stage.desc)}</p></div><div class="story-analogy"><strong>Think of it like this</strong><span>${esc(stage.analogy)}</span></div>`;
+}
+
+function renderLearningStory(){
+  return `<section class="learning-story" aria-labelledby="learning-story-title"><div class="learning-story-heading"><span class="section-kicker">A SIMPLE MENTAL MODEL</span><h2 id="learning-story-title">How AI learns, in five clear steps.</h2><p>No dots to connect. Just follow the journey from examples to a useful prediction.</p></div><div class="story-steps" role="list">${flowStages.map(stage=>`<button class="story-step ${stage.num===selectedFlowStage.num?'active':''}" data-story-step="${stage.num}" role="listitem"><span>${stage.num}</span><strong>${esc(stage.short)}</strong></button>`).join('')}</div><div class="story-detail" id="story-detail">${renderStoryDetail(selectedFlowStage)}</div></section>`;
+}
+
+function wireLearningStory(){
+  document.querySelectorAll('[data-story-step]').forEach(button=>{
+    button.onclick=()=>{
+      selectedFlowStage=flowStages.find(stage=>stage.num===button.dataset.storyStep)||flowStages[0];
+      document.querySelectorAll('[data-story-step]').forEach(item=>item.classList.toggle('active',item===button));
+      const detail=document.getElementById('story-detail');
+      if(detail) detail.innerHTML=renderStoryDetail(selectedFlowStage);
+    };
+  });
+}
+
 function wireRoadmap(){
   document.querySelectorAll('.role-btn').forEach(btn=>{
     btn.onclick=()=>{
@@ -947,11 +971,11 @@ home=function(){
   const next=catalog.chapters.find(c=>!done(c.id))||catalog.chapters[0];
 
   app.innerHTML=`
-    <!-- Museum Painting Exhibit Hero -->
-    ${renderFramedAiPainting()}
+    <!-- Editorial hero -->
+    ${renderEditorialHero()}
 
-    <!-- Living Synapse Canvas -->
-    ${renderInteractiveAiWidget()}
+    <!-- Clear five-step AI learning guide -->
+    ${renderLearningStory()}
 
     <!-- 3-Step Guided Journey -->
     <div class="step-journey-wrap">
@@ -1001,7 +1025,7 @@ home=function(){
     </div>
   `;
 
-  wireInteractiveAiWidget();
+  wireLearningStory();
 };
 
 learn=function(){
