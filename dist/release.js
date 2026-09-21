@@ -2718,6 +2718,48 @@ window.openWelcomeGateway = function(){
   });
 };
 
+function setupMobileNavigation(){
+  const sidebar=document.querySelector('aside');
+  const header=document.querySelector('header');
+  if(!sidebar||!header||document.getElementById('mobile-nav-toggle')) return;
+
+  sidebar.id='site-sidebar';
+  const toggle=document.createElement('button');
+  toggle.id='mobile-nav-toggle';
+  toggle.className='mobile-nav-toggle';
+  toggle.type='button';
+  toggle.setAttribute('aria-label','Open navigation menu');
+  toggle.setAttribute('aria-controls','site-sidebar');
+  toggle.setAttribute('aria-expanded','false');
+  toggle.innerHTML='<span></span><span></span><span></span>';
+  header.prepend(toggle);
+
+  const backdrop=document.createElement('div');
+  backdrop.id='mobile-nav-backdrop';
+  backdrop.className='mobile-nav-backdrop';
+  backdrop.setAttribute('aria-hidden','true');
+  document.body.append(backdrop);
+
+  const close=()=>{
+    sidebar.classList.remove('mobile-nav-open');
+    backdrop.classList.remove('visible');
+    document.body.classList.remove('mobile-nav-open');
+    toggle.setAttribute('aria-expanded','false');
+  };
+  const open=()=>{
+    sidebar.classList.add('mobile-nav-open');
+    backdrop.classList.add('visible');
+    document.body.classList.add('mobile-nav-open');
+    toggle.setAttribute('aria-expanded','true');
+  };
+  toggle.onclick=()=>sidebar.classList.contains('mobile-nav-open')?close():open();
+  backdrop.onclick=close;
+  sidebar.querySelectorAll('a[href^="#"]').forEach(link=>link.addEventListener('click',close));
+  window.addEventListener('hashchange',close);
+  window.addEventListener('resize',()=>{if(window.innerWidth>900) close();});
+  document.addEventListener('keydown',event=>{if(event.key==='Escape') close();});
+}
+
 function careerPaths(){
 
   app.innerHTML=`
@@ -2743,6 +2785,7 @@ function careerPaths(){
 
 async function boot(){
   try {
+    setupMobileNavigation();
     const r = await fetch('/course.json');
     if(!r.ok) throw Error('Could not load course.json');
     catalog = await r.json();

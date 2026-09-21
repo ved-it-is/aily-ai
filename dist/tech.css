@@ -2334,3 +2334,28 @@ button, .button, .edition, .track-tab, .role-btn, .arcade-cat-pill { touch-actio
   .welcome-gateway-card { width: calc(100% - 24px); max-height: calc(100vh - 24px); overflow-y: auto; }
   .welcome-title { font-size: 22px; }
 }
+
+/* ── Mobile drawer navigation and compact opening tour ─────────────────── */
+.mobile-nav-toggle, .mobile-nav-backdrop { display: none; }
+@media (max-width: 900px) {
+  .mobile-nav-toggle { display: inline-flex; width: 38px; height: 38px; padding: 9px; flex: 0 0 auto; flex-direction: column; justify-content: center; gap: 5px; border: 1px solid var(--line); border-radius: 9px; background: #fff; }
+  .mobile-nav-toggle span { display: block; width: 18px; height: 2px; border-radius: 2px; background: #343047; }
+  header { gap: 12px; position: sticky; top: 0; z-index: 80; }
+  #breadcrumb { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  aside#site-sidebar { position: fixed; z-index: 101; inset: 0 auto 0 0; width: min(286px, 84vw); padding: 28px 20px; transform: translateX(-105%); transition: transform .24s ease; box-shadow: 18px 0 42px rgba(15,23,42,.2); border-right: 1px solid var(--line); border-bottom: 0; overflow-y: auto; }
+  aside#site-sidebar.mobile-nav-open { transform: translateX(0); }
+  aside#site-sidebar .tagline, aside#site-sidebar .nav-label, aside#site-sidebar .sidebar-bottom { display: block; }
+  aside#site-sidebar nav { display: grid; overflow: visible; margin-top: 0; }
+  aside#site-sidebar nav > a, aside#site-sidebar .nav-accordion-summary { width: 100%; white-space: normal; padding: 12px 14px; }
+  aside#site-sidebar .nav-accordion { width: 100%; }
+  .mobile-nav-backdrop.visible { display: block; position: fixed; z-index: 100; inset: 0; background: rgba(15,23,42,.45); backdrop-filter: blur(2px); }
+  body.mobile-nav-open { overflow: hidden; }
+}
+@media (max-width: 640px) {
+  .welcome-gateway-backdrop { padding: 12px; align-items: center; }
+  .welcome-gateway-card { width: min(100%, 390px); max-height: min(620px, calc(100vh - 24px)); padding: 20px; border-radius: 16px; }
+  .welcome-header { margin-bottom: 14px; }.welcome-logo { margin-bottom: 5px; }.welcome-title { font-size: 20px; margin-bottom: 4px; }.welcome-sub { font-size: 12px; }
+  .welcome-info-tab { padding: 12px; }.welcome-info-tab > p { display: none; }.welcome-info-label { margin-bottom: 8px; }
+  .welcome-steps-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin: 0; }.welcome-step-item { display: block; padding: 8px; margin: 0; font-size: 10px; line-height: 1.35; }.step-num { width: 20px; height: 20px; margin-bottom: 5px; font-size: 10px; }
+  .welcome-choices-grid { grid-template-columns: 1fr 1fr; gap: 8px; margin: 12px 0 0; }.welcome-choice-box { padding: 12px; border-radius: 12px; }.wc-icon { font-size: 20px; margin-bottom: 4px; }.wc-title { font-size: 13px; }.wc-desc { font-size: 11px; margin: 0 0 10px; }.wc-action { font-size: 11px; padding: 9px 6px; }
+}
