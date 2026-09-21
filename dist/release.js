@@ -67,7 +67,7 @@ const done=id=>completed.includes(id);
 
 function headerAccount(){
   const p=document.querySelector('.profile');
-  if(p) p.innerHTML=`<button onclick="openWelcomeGateway()" style="background:none;border:none;font-size:12px;color:#9698a6;cursor:pointer;margin-right:14px;padding:0">✦ Guide</button><a href="#account">${syncState==='loading'?'Connecting…':syncState==='error'?'Sync unavailable':account?'My progress · synced':'Sign in to sync'} <b>◎</b></a>`;
+  if(p) p.innerHTML=`<a href="#account">${syncState==='loading'?'Connecting…':syncState==='error'?'Sync unavailable':account?'My progress · synced':'Sign in to sync'} <b>◎</b></a>`;
 }
 
 async function loadAccount(){
@@ -2154,8 +2154,6 @@ function modelsPage(){
 }
 
 function accountPage(){
-  const cfg = window.AilyAuth ? window.AilyAuth.getConfig() : { url:'', anonKey:'' };
-
   app.innerHTML=`
     <div class="page-heading">
       <div>
@@ -2239,16 +2237,6 @@ function accountPage(){
             </button>
           </form>
 
-          <!-- Supabase Config Accordion -->
-          <details style="margin-top:24px;border-top:1px solid #f1f5f9;padding-top:14px">
-            <summary style="font-size:12px;color:var(--purple);font-weight:600;cursor:pointer">⚙ Connect Custom Supabase Credentials</summary>
-            <div style="margin-top:12px;display:flex;flex-direction:column;gap:10px">
-              <p style="font-size:12px;color:var(--text-sub);margin:0">Enter your project credentials from your Supabase Project Settings → API:</p>
-              <input type="text" id="sb-url-input" placeholder="https://your-ref.supabase.co" value="${esc(cfg.url)}" style="padding:8px 12px;border:1px solid #cbd5e1;border-radius:8px;font-size:12px">
-              <input type="password" id="sb-key-input" placeholder="eyJhbGciOi..." value="${esc(cfg.anonKey)}" style="padding:8px 12px;border:1px solid #cbd5e1;border-radius:8px;font-size:12px">
-              <button id="save-sb-config" class="button secondary" style="font-size:12px;padding:6px 12px">Save Credentials</button>
-            </div>
-          </details>
         </div>
       </div>
     `}
@@ -2310,7 +2298,7 @@ function accountPage(){
             accountPage();
           }
         } else {
-          throw new Error('Sign-in is not configured yet. Add the Supabase URL and anon key below, or configure them in Vercel.');
+          throw new Error('Sign-in is temporarily unavailable. Please try again shortly.');
         }
       } catch(err) {
         if(authMsg){
@@ -2323,20 +2311,6 @@ function accountPage(){
       } finally {
         authSubmit.disabled = false;
         authSubmit.textContent = isSignUp ? 'Create Account ➔' : 'Sign In to Aily ➔';
-      }
-    };
-  }
-
-  const saveSbBtn = document.getElementById('save-sb-config');
-  if(saveSbBtn){
-    saveSbBtn.onclick = () => {
-      const url = document.getElementById('sb-url-input').value;
-      const key = document.getElementById('sb-key-input').value;
-      if(window.AilyAuth){
-        window.AilyAuth.setConfig(url, key);
-        loadAccount();
-        alert('Supabase credentials saved. You can now sign in.');
-        accountPage();
       }
     };
   }
