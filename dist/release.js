@@ -2108,7 +2108,7 @@ function accountPage(){
         <span class="section-kicker">ACCOUNT &amp; PROGRESS</span>
         <h1>My Learning Account</h1>
       </div>
-      <span class="edition">${account ? 'SYNCED' : 'LOCAL DEMO'}</span>
+      <span class="edition">${account ? 'SYNCED' : 'GUEST MODE'}</span>
     </div>
     <p>Sign in with your email and password to securely sync your completed chapters, arcade mastery, and accredited diploma across devices.</p>
 
