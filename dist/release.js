@@ -65,37 +65,37 @@ const sourceLinks=keys=>`<div class="source-links"><span>Primary references</spa
 const gameLink=id=>catalog.games.find(g=>g.id===id);
 const done=id=>completed.includes(id);
 
-async function api(path,options={}){
-  const r=await fetch('/api/'+path,{credentials:'same-origin',...options,headers:{'content-type':'application/json',...options.headers}});
-  let body;try{body=await r.json()}catch{throw Error('Account service is unavailable. Please retry.')}
-  if(!r.ok){const e=Error(body.error||'Could not sync.');e.status=r.status;throw e}
-  return body;
-}
-
 function headerAccount(){
   const p=document.querySelector('.profile');
-  if(p) p.innerHTML=`<a href="#account">${syncState==='loading'?'Connecting…':syncState==='error'?'Sync unavailable':account?'My progress · synced':'Sign in to sync'} <b>◎</b></a>`;
+  if(p) p.innerHTML=`<button onclick="openWelcomeGateway()" style="background:none;border:none;font-size:12px;color:#9698a6;cursor:pointer;margin-right:14px;padding:0">✦ Guide</button><a href="#account">${syncState==='loading'?'Connecting…':syncState==='error'?'Sync unavailable':account?'My progress · synced':'Sign in to sync'} <b>◎</b></a>`;
 }
 
 async function loadAccount(){
   try{
-    account=await api('account');
-    const result=await api('progress');
-    progressRows=result.progress;
-    completed=progressRows.map(r=>r.activity_id);
+    if(!window.AilyAuth?.isConfigured()){
+      account=null;
+      syncState='guest';
+      return;
+    }
+    const user=await window.AilyAuth.getUser();
+    if(!user){
+      account=null;
+      syncState='guest';
+      return;
+    }
+    account={email:user.email,id:user.id};
+    progressRows=await window.AilyAuth.loadProgress();
+    completed=[...new Set([...completed,...progressRows.map(r=>r.activity_id)])];
     syncState='ready';syncError='';
   }catch(e){
-    if(e.status===401){account=null;syncState='guest'}
-    else{syncState='error';syncError=e.message}
+    account=null;syncState='error';syncError=e.message;
+  }finally{
+    headerAccount();
   }
-  headerAccount();
 }
 
 async function completeActivity(id,target){
   if(done(id)){if(target)target.textContent='✓ Saved to your account.';return}
-  if(window.AilyAuth && typeof window.AilyAuth.saveProgress === 'function'){
-    window.AilyAuth.saveProgress(id);
-  }
   if(!account){
     if(!completed.includes(id)) completed.push(id);
     if(target) target.innerHTML='✓ Saved locally. <a href="#account" style="color:var(--purple);font-weight:600;margin-left:6px">Sign in to sync ↗</a>';
@@ -103,13 +103,16 @@ async function completeActivity(id,target){
   }
   pending.add(id);if(target)target.textContent='Saving progress…';
   try{
-    await api('progress',{method:'POST',body:JSON.stringify({activityId:id})});
+    if(!window.AilyAuth?.isConfigured()) throw Error('Supabase is not configured.');
+    const saved=await window.AilyAuth.saveProgress(id);
+    if(!saved) throw Error('Could not save your progress to Supabase.');
     if(!completed.includes(id)) completed.push(id);
     progressRows.push({activity_id:id,completed_at:new Date().toISOString()});
     pending.delete(id);if(target)target.textContent='✓ Saved to your account.';
   }catch(e){
+    pending.delete(id);
     if(!completed.includes(id)) completed.push(id);
-    if(target){target.innerHTML=`✓ Saved in browser. <button class="button secondary retry" style="margin-left:6px;padding:3px 8px;font-size:11px">Retry server sync</button>`;target.querySelector('button').onclick=()=>completeActivity(id,target)}
+    if(target){target.innerHTML=`✓ Saved in browser. <button class="button secondary retry" style="margin-left:6px;padding:3px 8px;font-size:11px">Retry Supabase sync</button>`;target.querySelector('button').onclick=()=>completeActivity(id,target)}
   }
 }
 
@@ -1364,15 +1367,15 @@ python=function(){
     </div>
 
     <div class="lesson-layout">
-      <div class="topic-nav">
-        <a href="#python" data-scroll="py-core">01 Core Python for AI</a>
-        <a href="#python" data-scroll="py-numpy">02 NumPy Vectorization</a>
-        <a href="#python" data-scroll="py-pandas">03 Pandas DataFrames</a>
-        <a href="#python" data-scroll="py-plot">04 Visualizing Patterns</a>
-        <a href="#python" data-scroll="py-quiz">Checkpoint Quiz</a>
+      <div class="topic-nav" id="py-topic-nav">
+        <a href="#python" data-mod="py-core" class="active"><span>01</span> Core Python for AI</a>
+        <a href="#python" data-mod="py-numpy"><span>02</span> NumPy Vectorization</a>
+        <a href="#python" data-mod="py-pandas"><span>03</span> Pandas DataFrames</a>
+        <a href="#python" data-mod="py-plot"><span>04</span> Visualizing Patterns</a>
+        <a href="#python" data-mod="py-quiz"><span>✓</span> Checkpoint Quiz</a>
       </div>
-      <div>
-        <section class="lesson" id="py-core">
+      <div id="py-modules-wrap">
+        <section class="lesson" id="py-core" style="display:block">
           <span class="eyebrow">MODULE 01 · CORE SYNTAX</span>
           <h2>Lists, Slicing &amp; Comprehensions</h2>
           <p>ML pipelines manipulate datasets with slices and list comprehensions. Remember: Python indexing starts at <code>0</code>, and negative indices count backwards.</p>
@@ -1382,10 +1385,13 @@ passing_scores = [s for s in scores if s >= 80]  # [85, 91, 88]
 
 # Slicing: [start:stop:step]
 last_two = scores[-2:]  # [64, 88]</code></pre>
-          <a class="w3-chip" href="https://www.w3schools.com/python/python_lists.asp" target="_blank" rel="noopener noreferrer"><span class="w3-badge">W3</span> W3Schools List Reference ↗</a>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:20px">
+            <a class="w3-chip" href="https://www.w3schools.com/python/python_lists.asp" target="_blank" rel="noopener noreferrer"><span class="w3-badge">W3</span> W3Schools List Reference ↗</a>
+            <button class="button py-next-btn" data-target="py-numpy" style="font-size:12.5px;padding:8px 16px">Next: 02 NumPy Vectorization ➔</button>
+          </div>
         </section>
 
-        <section class="lesson" id="py-numpy">
+        <section class="lesson" id="py-numpy" style="display:none">
           <span class="eyebrow">MODULE 02 · THE MATH ENGINE</span>
           <h2>NumPy Arrays &amp; Shapes</h2>
           <p>An AI model is fundamentally a series of matrix operations. An array's <code>.shape</code> describes rows and columns. Broadcasting automatically aligns dimensions.</p>
@@ -1398,10 +1404,13 @@ print("Column means:", X.mean(axis=0))  # [3. 4.]
 
 # Vectorized arithmetic across all elements (No for-loops!)
 X_scaled = (X - X.mean(axis=0)) / X.std(axis=0)</code></pre>
-          <a class="w3-chip" href="https://www.w3schools.com/python/numpy/numpy_array_shapes.asp" target="_blank" rel="noopener noreferrer"><span class="w3-badge">W3</span> W3Schools NumPy Shapes ↗</a>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:20px">
+            <button class="button secondary py-prev-btn" data-target="py-core" style="font-size:12.5px;padding:8px 16px">← 01 Core Python</button>
+            <button class="button py-next-btn" data-target="py-pandas" style="font-size:12.5px;padding:8px 16px">Next: 03 Pandas DataFrames ➔</button>
+          </div>
         </section>
 
-        <section class="lesson" id="py-pandas">
+        <section class="lesson" id="py-pandas" style="display:none">
           <span class="eyebrow">MODULE 03 · TABULAR DATA</span>
           <h2>Pandas: Cleaning &amp; Filtering Data</h2>
           <p>A DataFrame is a spreadsheet in code. Real-world AI engineering is 80% data cleaning: handling <code>NaN</code> values and selecting feature columns.</p>
@@ -1413,17 +1422,20 @@ df = pd.DataFrame({
 })
 
 # 1. Inspect missing values
-print("Missing counts:\\n", df.isna().sum())
+print("Missing counts:\n", df.isna().sum())
 
 # 2. Impute or drop nulls
 df_clean = df.dropna(subset=["study_hours"])
 
 # 3. Boolean mask filtering
 high_study = df_clean[df_clean["study_hours"] >= 4]</code></pre>
-          <a class="w3-chip" href="https://www.w3schools.com/python/pandas/pandas_dataframes.asp" target="_blank" rel="noopener noreferrer"><span class="w3-badge">W3</span> W3Schools Pandas DataFrames ↗</a>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:20px">
+            <button class="button secondary py-prev-btn" data-target="py-numpy" style="font-size:12.5px;padding:8px 16px">← 02 NumPy</button>
+            <button class="button py-next-btn" data-target="py-plot" style="font-size:12.5px;padding:8px 16px">Next: 04 Visualizing Patterns ➔</button>
+          </div>
         </section>
 
-        <section class="lesson" id="py-plot">
+        <section class="lesson" id="py-plot" style="display:none">
           <span class="eyebrow">MODULE 04 · DATA VISUALIZATION</span>
           <h2>Matplotlib: Scatterplots &amp; Histograms</h2>
           <p>Before training any algorithm, plot your data to spot outliers, non-linear curves, and class separability.</p>
@@ -1432,36 +1444,71 @@ high_study = df_clean[df_clean["study_hours"] >= 4]</code></pre>
 hours = [2, 4, 6, 8, 10]
 scores = [50, 65, 78, 88, 95]
 
-plt.scatter(hours, scores, color="lime", label="Student scores")
+plt.scatter(hours, scores, color="#059669", label="Student scores")
 plt.xlabel("Hours Studied")
 plt.ylabel("Exam Score")
 plt.title("Study Hours vs Performance")
 plt.legend()
 # plt.show()</code></pre>
-          <a class="w3-chip" href="https://www.w3schools.com/python/matplotlib_scatter.asp" target="_blank" rel="noopener noreferrer"><span class="w3-badge">W3</span> W3Schools Matplotlib Scatter ↗</a>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:20px">
+            <button class="button secondary py-prev-btn" data-target="py-pandas" style="font-size:12.5px;padding:8px 16px">← 03 Pandas</button>
+            <button class="button py-next-btn" data-target="py-quiz" style="font-size:12.5px;padding:8px 16px">Take Checkpoint Quiz ➔</button>
+          </div>
         </section>
 
-        <section class="lesson" id="py-quiz">
+        <section class="lesson" id="py-quiz" style="display:none">
           <h2>Python Readiness Checkpoint</h2>
           <p class="note">Answer these three checks to record Python Essentials as complete.</p>
           ${quiz('What is the shape of an array with 10 rows and 4 columns?',['(4, 10)','(10, 4)','(40,)'],1,'Shape lists axis sizes in order: (rows, columns).','py-shape')}
           ${quiz('Which is substantially faster for calculating dot products of 1M numbers?',['A Python for-loop with list accumulation','np.dot() vectorized array operation','Iterating over a dictionary'],1,'NumPy runs in compiled C using hardware vector instructions.','py-speed')}
           ${quiz('Which expression selects rows in DataFrame df where score is at least 70?',['df[df["score"] >= 70]','df["score" = 70]','df.rows(70)'],0,'Boolean indexing filters rows satisfying the condition.','py-filter')}
           <div id="python-save" class="feedback" aria-live="polite"></div>
+          <div style="display:flex;margin-top:20px">
+            <button class="button secondary py-prev-btn" data-target="py-plot" style="font-size:12.5px;padding:8px 16px">← 04 Visualizing Patterns</button>
+          </div>
         </section>
       </div>
     </div>
   `;
 
-  const passed=new Set();
+  // Function to activate a specific module
+  const switchModule = (modId) => {
+    document.querySelectorAll('#py-topic-nav a').forEach(link => {
+      link.classList.toggle('active', link.dataset.mod === modId);
+    });
+    document.querySelectorAll('#py-modules-wrap .lesson').forEach(sec => {
+      sec.style.display = sec.id === modId ? 'block' : 'none';
+    });
+    const targetElem = document.getElementById(modId);
+    if(targetElem) targetElem.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  // Wire topic sidebar switches
+  document.querySelectorAll('#py-topic-nav a').forEach(link => {
+    link.onclick = (e) => {
+      e.preventDefault();
+      switchModule(link.dataset.mod);
+    };
+  });
+
+  // Wire next and previous buttons inside modules
+  document.querySelectorAll('.py-next-btn, .py-prev-btn').forEach(btn => {
+    btn.onclick = () => {
+      switchModule(btn.dataset.target);
+    };
+  });
+
+  const passed = new Set();
   [['py-shape',1,'Shape lists rows then columns.'],['py-speed',1,'NumPy executes in compiled C.'],['py-filter',0,'Boolean masks filter matching rows.']].forEach(([id,n,why])=>{
     wireQuiz(id,n,why,()=>{
       passed.add(id);
       if(passed.size===3) completeActivity('python', document.getElementById('python-save'));
     });
   });
-  bindScroll();
 };
+
+function bindScroll(){}
+
 
 atlas=function(){
   const jargonCategories = [
@@ -2205,13 +2252,11 @@ function accountPage(){
           } else {
             const data = await window.AilyAuth.signIn(email, password);
             account = { email: data.user.email, id: data.user.id };
+            await loadAccount();
             accountPage();
           }
         } else {
-          // Demo fallback when no Supabase key is configured
-          account = { email: email, id: 'user-' + btoa(email).slice(0, 8) };
-          headerAccount();
-          accountPage();
+          throw new Error('Sign-in is not configured yet. Add the Supabase URL and anon key below, or configure them in Vercel.');
         }
       } catch(err) {
         if(authMsg){
@@ -2235,7 +2280,8 @@ function accountPage(){
       const key = document.getElementById('sb-key-input').value;
       if(window.AilyAuth){
         window.AilyAuth.setConfig(url, key);
-        alert('Supabase credentials saved!');
+        loadAccount();
+        alert('Supabase credentials saved. You can now sign in.');
         accountPage();
       }
     };
@@ -2256,13 +2302,14 @@ function accountPage(){
     syncNowBtn.onclick = async () => {
       syncNowBtn.disabled = true;
       syncNowBtn.textContent = 'Syncing…';
-      for(const id of completed){
-        if(window.AilyAuth) await window.AilyAuth.saveProgress(id);
-      }
-      setTimeout(() => {
+      const results=await Promise.all(completed.map(id=>window.AilyAuth?.saveProgress(id)));
+      if(results.every(Boolean)){
         syncNowBtn.disabled = false;
         syncNowBtn.textContent = '✓ Synced';
-      }, 500);
+      }else{
+        syncNowBtn.disabled = false;
+        syncNowBtn.textContent = 'Retry sync';
+      }
     };
   }
 }
@@ -2567,7 +2614,88 @@ window.closeCertificateModal = function(){
 };
 
 
+
+/* ── Welcome Gateway ──────────────────────────────────── */
+function renderWelcomeGateway(){
+  return `
+  <div class="welcome-gateway-backdrop" id="welcome-gateway-backdrop">
+    <div class="welcome-gateway-card">
+      <div class="welcome-header">
+        <div class="welcome-logo">✦ Aily</div>
+        <h2 class="welcome-title">Your AI Learning Journey Starts Here</h2>
+        <p class="welcome-sub">Learn AI & Machine Learning through hands-on labs, interactive quizzes, and real projects — at your own pace.</p>
+      </div>
+
+      <div class="welcome-info-tab">
+        <div class="welcome-info-label">🗺 What is Aily?</div>
+        <p style="margin:0 0 12px;color:#c9cad6;font-size:14px;line-height:1.6">Aily is a structured AI curriculum — from core Python & Math all the way to deploying real ML models. No fluff, just what matters.</p>
+        <ol class="welcome-steps-list">
+          <li class="welcome-step-item">
+            <span class="step-num">1</span>
+            <div><strong>Learn</strong> — 12 chapters covering ML foundations, deep learning, NLP, and production AI.</div>
+          </li>
+          <li class="welcome-step-item">
+            <span class="step-num">2</span>
+            <div><strong>Practice</strong> — Python labs, GenAI Arcade quiz challenges, and live model experiments.</div>
+          </li>
+          <li class="welcome-step-item">
+            <span class="step-num">3</span>
+            <div><strong>Certify</strong> — Complete all pillars and claim your AI Mastery Certificate.</div>
+          </li>
+        </ol>
+      </div>
+
+      <div class="welcome-choices-grid">
+        <div class="welcome-choice-box" id="wg-guest-btn">
+          <div class="wc-icon">👤</div>
+          <div class="wc-title">Guest Mode</div>
+          <div class="wc-desc">Explore freely. Progress saved locally — no account needed.</div>
+          <button class="button secondary wc-action">Continue as Guest</button>
+        </div>
+        <div class="welcome-choice-box featured" id="wg-signin-btn">
+          <div class="wc-icon">🔐</div>
+          <div class="wc-title">Sign In / Sign Up</div>
+          <div class="wc-desc">Sync your progress across devices and earn your certificate.</div>
+          <button class="button wc-action">Get Started →</button>
+        </div>
+      </div>
+
+      <p style="text-align:center;font-size:11px;color:#555;margin:16px 0 0">By continuing you agree to use this platform for learning. No spam, ever.</p>
+    </div>
+  </div>`;
+}
+
+window.openWelcomeGateway = function(){
+  // Remove any existing instance
+  const existing = document.getElementById('welcome-gateway-backdrop');
+  if(existing) existing.remove();
+
+  document.body.insertAdjacentHTML('beforeend', renderWelcomeGateway());
+
+  const backdrop = document.getElementById('welcome-gateway-backdrop');
+
+  document.getElementById('wg-guest-btn').addEventListener('click', function(){
+    sessionStorage.setItem('aily_welcome_dismissed','true');
+    backdrop.remove();
+  });
+
+  document.getElementById('wg-signin-btn').addEventListener('click', function(){
+    sessionStorage.setItem('aily_welcome_dismissed','true');
+    backdrop.remove();
+    location.hash = '#account';
+  });
+
+  // Click outside card to dismiss as guest
+  backdrop.addEventListener('click', function(e){
+    if(e.target === backdrop){
+      sessionStorage.setItem('aily_welcome_dismissed','true');
+      backdrop.remove();
+    }
+  });
+};
+
 function careerPaths(){
+
   app.innerHTML=`
     <div class="page-heading">
       <div>
@@ -2601,6 +2729,9 @@ async function boot(){
     await loadAccount();
     route();
     window.addEventListener('hashchange', route);
+    if(!sessionStorage.getItem('aily_welcome_dismissed')){
+      setTimeout(openWelcomeGateway, 200);
+    }
   } catch(e) {
     console.error(e);
     const appElem = document.querySelector('#app');

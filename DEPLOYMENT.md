@@ -44,18 +44,27 @@ This guide walks you through deploying **Aily** to Vercel with Supabase Auth (Em
    vercel --prod
    ```
 
+### Required Vercel environment variables
+
+Before deploying, add these values in **Project Settings → Environment Variables** for Production (and Preview if you use preview deployments), then redeploy:
+
+* `SUPABASE_URL` — your Supabase Project URL
+* `SUPABASE_ANON_KEY` — your Supabase anon/public key
+
+The build injects these public client values into the static app. Never add a Supabase `service_role` key to Vercel or the browser.
+
 ---
 
 ## Part 3: Connecting Your Supabase Project
 
 You have two easy ways to connect your Supabase credentials:
 
-### 1. Directly in the App (No rebuild needed!)
+### 1. Directly in the App (No rebuild needed)
 * Open your deployed site on Vercel.
 * Click on **My Progress** (or navigate to `#account`).
 * Expand **⚙ Connect Custom Supabase Credentials**.
 * Paste your **Supabase Project URL** and **Anon Key**, then click **Save Credentials**.
-* That's it! You can now create accounts and sign in with email and password.
+* That's it! You can now create accounts and sign in with email and password. This is useful for private previews; configure the Vercel environment variables above for the public site.
 
 ### 2. Pre-configured via window.AILY_CONFIG
 In `dist/index.html` inside `<head>`, you can optionally add:

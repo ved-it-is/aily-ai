@@ -42,25 +42,23 @@
   }
 
   async function loadSupabaseProgress() {
-    if (!client) return;
-    try {
-      const { data: { user } } = await client.auth.getUser();
-      if (!user) return;
-      const { data, error } = await client
-        .from('user_progress')
-        .select('activity_id, completed_at')
-        .eq('user_id', user.id);
-      
-      if (!error && Array.isArray(data)) {
-        for (const row of data) {
-          if (typeof completed !== 'undefined' && !completed.includes(row.activity_id)) {
-            completed.push(row.activity_id);
-          }
-        }
+    if (!client) return [];
+    const { data: { user }, error: userError } = await client.auth.getUser();
+    if (userError) throw userError;
+    if (!user) return [];
+    const { data, error } = await client
+      .from('user_progress')
+      .select('activity_id, completed_at')
+      .eq('user_id', user.id)
+      .order('completed_at');
+    if (error) throw error;
+    const rows = Array.isArray(data) ? data : [];
+    if (typeof completed !== 'undefined') {
+      for (const row of rows) {
+        if (!completed.includes(row.activity_id)) completed.push(row.activity_id);
       }
-    } catch (err) {
-      console.warn('Supabase progress load error:', err);
     }
+    return rows;
   }
 
   window.AilyAuth = {
@@ -79,6 +77,15 @@
     },
     getClient() {
       return client;
+    },
+    async getUser() {
+      if (!client) return null;
+      const { data: { user }, error } = await client.auth.getUser();
+      if (error) throw error;
+      return user;
+    },
+    loadProgress() {
+      return loadSupabaseProgress();
     },
     async signUp(email, password) {
       if (!client) throw new Error('Please configure your Supabase URL & Anon Key first.');
@@ -108,11 +115,12 @@
       try {
         const { data: { user } } = await client.auth.getUser();
         if (!user) return false;
-        await client.from('user_progress').upsert({
+        const { error } = await client.from('user_progress').upsert({
           user_id: user.id,
           activity_id: activityId,
           completed_at: new Date().toISOString()
         }, { onConflict: 'user_id,activity_id' });
+        if (error) throw error;
         return true;
       } catch (err) {
         console.warn('Could not save to Supabase:', err);

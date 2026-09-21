@@ -32,6 +32,13 @@ CREATE POLICY "Users can insert own progress"
   FOR INSERT
   WITH CHECK (auth.uid() = user_id);
 
+DROP POLICY IF EXISTS "Users can update own progress" ON public.user_progress;
+CREATE POLICY "Users can update own progress"
+  ON public.user_progress
+  FOR UPDATE
+  USING (auth.uid() = user_id)
+  WITH CHECK (auth.uid() = user_id);
+
 DROP POLICY IF EXISTS "Users can delete own progress" ON public.user_progress;
 CREATE POLICY "Users can delete own progress"
   ON public.user_progress
