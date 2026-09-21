@@ -1854,10 +1854,17 @@ let arcadeFilter = {
   difficulty: 'All',
   search: '',
   page: 1,
-  pageSize: 10,
+  pageSize: 1,
   sprintMode: false,
   sprintQuestions: []
 };
+let arcadeAdvanceTimer;
+let arcadeAnswers = new Map();
+function resetArcadeRun(){
+  clearTimeout(arcadeAdvanceTimer);
+  arcadeAnswers.clear();
+  arcadeFilter.page=1;
+}
 
 async function loadArcadeQuestions() {
   if (arcadeQuestions.length) return arcadeQuestions;
@@ -1904,7 +1911,7 @@ async function aiArcadePage() {
       </div>
       <span class="edition">INTERACTIVE ARENA</span>
     </div>
-    <p>Test your knowledge with 600+ real-world AI, ML, Python, and GenAI interview questions stored directly in the database. Filter by domain or launch a speed sprint.</p>
+    <p>One question at a time. Choose an answer, see feedback, and the next question appears automatically. Filter by topic or try a 10-question sprint.</p>
     <div id="arcade-container"><p role="status">Loading questions database…</p></div>
   `;
 
@@ -1914,11 +1921,12 @@ async function aiArcadePage() {
 arcade = aiArcadePage;
 
 function renderArcadeApp() {
+  clearTimeout(arcadeAdvanceTimer);
   const container = document.getElementById('arcade-container');
   if (!container) return;
 
   const solvedCount = completed.filter(id => id.startsWith('q:')).length;
-  const totalCount = arcadeQuestions.length || 600;
+  const totalCount = arcadeQuestions.length;
 
   let filtered = arcadeQuestions;
   if (arcadeFilter.sprintMode) {
@@ -1937,7 +1945,7 @@ function renderArcadeApp() {
   }
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / arcadeFilter.pageSize));
-  if (arcadeFilter.page > totalPages) arcadeFilter.page = totalPages;
+  const finished = filtered.length > 0 && arcadeFilter.page > totalPages;
   const startIdx = (arcadeFilter.page - 1) * arcadeFilter.pageSize;
   const pageQuestions = filtered.slice(startIdx, startIdx + arcadeFilter.pageSize);
 
@@ -1974,37 +1982,32 @@ function renderArcadeApp() {
       <div class="arcade-cat-list">
         ${arcadeCategories.map(c => `
           <button class="arcade-cat-pill ${arcadeFilter.category === c ? 'active' : ''}" data-cat="${c}">
-            ${c === 'All' ? '🌟 All (600)' : c}
+            ${c === 'All' ? `🌟 All (${totalCount})` : c}
           </button>
         `).join('')}
       </div>
       <div style="font-size:12px;color:#859ba8;margin-bottom:16px;display:flex;justify-content:space-between">
         <span>Showing <strong>${filtered.length}</strong> matching questions</span>
-        <span>Page ${arcadeFilter.page} of ${totalPages}</span>
+        <span>${finished?'Practice complete':filtered.length?`Question ${arcadeFilter.page} of ${filtered.length}`:'0 questions'}</span>
       </div>
     ` : `
       <div class="scenario-box" style="margin-bottom:16px">
         <strong>⚡ RANDOM 10-QUESTION SPEED SPRINT</strong>
-        <p>Answer these 10 randomly selected questions across all domains to test your rapid recall.</p>
+        <p>${finished?'Sprint complete':`Question ${arcadeFilter.page} of ${filtered.length}`} · Each answer brings up the next question automatically.</p>
       </div>
     `}
 
     <!-- Questions Feed -->
     <div class="arcade-questions-feed">
-      ${pageQuestions.length ? pageQuestions.map((q, idx) => renderQuestionCard(q, startIdx + idx + 1)).join('') : '<p class="empty" style="padding:30px;text-align:center">No questions match your current search/filter. Try a different topic or reset filters.</p>'}
+      ${finished?`<section class="lesson"><h2 tabindex="-1" id="arcade-finish">${arcadeFilter.sprintMode?'Sprint':'Practice'} complete</h2><p>You answered ${filtered.length} questions. ${[...arcadeAnswers.values()].filter(a=>a.correct).length} correct on the first attempt.</p><button class="button" id="arcade-restart">Practise again</button></section>`:pageQuestions.length ? pageQuestions.map((q, idx) => renderQuestionCard(q, startIdx + idx + 1)).join('') : '<p class="empty" style="padding:30px;text-align:center">No questions match your current search/filter. Try a different topic or reset filters.</p>'}
     </div>
 
-    <!-- Pagination -->
-    ${totalPages > 1 ? `
-      <div class="arcade-pager">
-        <button id="arcade-prev" class="button secondary" style="font-size:12px;padding:8px 14px" ${arcadeFilter.page <= 1 ? 'disabled' : ''}>← Previous Page</button>
-        <span class="arcade-page-info">Page ${arcadeFilter.page} / ${totalPages}</span>
-        <button id="arcade-next" class="button secondary" style="font-size:12px;padding:8px 14px" ${arcadeFilter.page >= totalPages ? 'disabled' : ''}>Next Page →</button>
-      </div>
-    ` : ''}
+
   `;
 
   wireArcadeEvents();
+  const restart=document.getElementById('arcade-restart');
+  if(restart) restart.onclick=()=>{resetArcadeRun();renderArcadeApp();};
 }
 
 function renderQuestionCard(q, num) {
@@ -2023,7 +2026,7 @@ function renderQuestionCard(q, num) {
         <span id="q-status-${q.id}" class="pill ${isDone ? 'green' : ''}">${isDone ? '✓ SOLVED' : q.category.toUpperCase()}</span>
       </div>
 
-      <h3 class="arcade-q-title">${esc(q.question)}</h3>
+      <h3 class="arcade-q-title" tabindex="-1">${esc(q.question)}</h3>
 
       ${q.code_snippet ? `
         <pre style="margin:0 0 14px;padding:14px 16px;font-size:12.5px;background:#1e293b;border:1px solid #334155;border-radius:10px;color:#f8fafc"><code>${esc(q.code_snippet)}</code></pre>
@@ -2031,15 +2034,15 @@ function renderQuestionCard(q, num) {
 
       <div class="arcade-opts" id="opts-${q.id}">
         ${q.options.map((opt, optIdx) => `
-          <button class="arcade-opt-btn ${isDone && optIdx === q.correct ? 'correct' : ''}" data-qid="${q.id}" data-opt="${optIdx}">
+          <button class="arcade-opt-btn" data-qid="${q.id}" data-opt="${optIdx}">
             <span class="arcade-opt-letter">${String.fromCharCode(65 + optIdx)}</span>
             <span>${esc(opt)}</span>
           </button>
         `).join('')}
       </div>
 
-      <div id="q-exp-${q.id}" class="arcade-explain" style="display:${isDone ? 'block' : 'none'}">
-        <strong style="color:var(--purple);display:block;margin-bottom:4px;font-size:11px;font-family:'IBM Plex Mono',monospace">SENIOR DEVELOPER TAKEAWAY:</strong>
+      <div id="q-exp-${q.id}" class="arcade-explain" role="status" style="display:none">
+        <strong style="color:var(--purple);display:block;margin-bottom:4px;font-size:11px;font-family:'IBM Plex Mono',monospace">WHY THIS ANSWER:</strong>
         ${esc(q.explanation)}
       </div>
     </div>
@@ -2052,11 +2055,13 @@ function wireArcadeEvents() {
       const qid = +btn.dataset.qid;
       const optIdx = +btn.dataset.opt;
       const q = arcadeQuestions.find(item => item.id === qid);
-      if (!q) return;
+      if (!q || arcadeAnswers.has(qid)) return;
+      arcadeAnswers.set(qid,{correct:optIdx===q.correct});
 
       const optsContainer = document.getElementById('opts-' + qid);
       if (optsContainer) {
         optsContainer.querySelectorAll('.arcade-opt-btn').forEach((b, i) => {
+          b.disabled=true;
           b.classList.remove('correct', 'wrong');
           if (i === q.correct) b.classList.add('correct');
           else if (i === optIdx && optIdx !== q.correct) b.classList.add('wrong');
@@ -2065,6 +2070,27 @@ function wireArcadeEvents() {
 
       const expBox = document.getElementById('q-exp-' + qid);
       if (expBox) expBox.style.display = 'block';
+      const notice=document.createElement('p');
+      notice.className='note';
+      notice.textContent=(optIdx===q.correct?'Correct. ':'Not quite. The correct answer is highlighted. ')+'Next question appears in 4 seconds.';
+      expBox.append(notice);
+      const hold=document.createElement('button');
+      hold.className='button secondary';
+      hold.textContent='Keep explanation open';
+      expBox.append(hold);
+      const advance=()=>{
+        arcadeFilter.page++;
+        renderArcadeApp();
+        const heading=document.querySelector('#arcade-container .arcade-q-title, #arcade-finish');
+        if(heading){heading.focus({preventScroll:true});heading.scrollIntoView({block:'center'});}
+      };
+      arcadeAdvanceTimer=setTimeout(advance,4000);
+      hold.onclick=()=>{
+        clearTimeout(arcadeAdvanceTimer);
+        notice.textContent='Paused so you can read the explanation.';
+        hold.textContent='Continue';
+        hold.onclick=advance;
+      };
 
       if (optIdx === q.correct) {
         completeActivity('q:' + q.id);
@@ -2081,15 +2107,17 @@ function wireArcadeEvents() {
   if (searchBox) {
     searchBox.oninput = () => {
       arcadeFilter.search = searchBox.value;
-      arcadeFilter.page = 1;
+      resetArcadeRun();
       renderArcadeApp();
+      const replacement=document.getElementById('arcade-search-box');
+      replacement.focus();
     };
   }
 
   document.querySelectorAll('.arcade-cat-pill').forEach(btn => {
     btn.onclick = () => {
       arcadeFilter.category = btn.dataset.cat;
-      arcadeFilter.page = 1;
+      resetArcadeRun();
       renderArcadeApp();
     };
   });
@@ -2097,7 +2125,7 @@ function wireArcadeEvents() {
   document.querySelectorAll('.arcade-diff-btn').forEach(btn => {
     btn.onclick = () => {
       arcadeFilter.difficulty = btn.dataset.diff;
-      arcadeFilter.page = 1;
+      resetArcadeRun();
       renderArcadeApp();
     };
   });
@@ -2110,30 +2138,12 @@ function wireArcadeEvents() {
         const shuffled = [...arcadeQuestions].sort(() => 0.5 - Math.random());
         arcadeFilter.sprintQuestions = shuffled.slice(0, 10);
       }
-      arcadeFilter.page = 1;
+      resetArcadeRun();
       renderArcadeApp();
     };
   }
 
-  const prevBtn = document.getElementById('arcade-prev');
-  if (prevBtn) {
-    prevBtn.onclick = () => {
-      if (arcadeFilter.page > 1) {
-        arcadeFilter.page--;
-        renderArcadeApp();
-        window.scrollTo({ top: 300, behavior: 'smooth' });
-      }
-    };
-  }
 
-  const nextBtn = document.getElementById('arcade-next');
-  if (nextBtn) {
-    nextBtn.onclick = () => {
-      arcadeFilter.page++;
-      renderArcadeApp();
-      window.scrollTo({ top: 300, behavior: 'smooth' });
-    };
-  }
 }
 
 const modelRows=[
@@ -2414,6 +2424,8 @@ function notFound(){
 }
 
 route=function(){
+  clearTimeout(arcadeAdvanceTimer);
+  resetArcadeRun();
   if(!catalog) return;
   const [page, id] = (location.hash.slice(1)||'home').split('/');
   const names = {
