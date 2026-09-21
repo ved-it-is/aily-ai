@@ -932,7 +932,7 @@ function renderRoleDetail(r){
 
 /* Homepage v2: a calm editorial introduction and a plain-language learning guide. */
 function renderEditorialHero(){
-  return `<section class="editorial-hero" aria-labelledby="editorial-title"><div class="editorial-copy"><span class="section-kicker">AILY · A PRACTICAL AI LEARNING SPACE</span><h1 id="editorial-title">Learn the pattern<br>behind the <em>magic.</em></h1><blockquote>“AI becomes less mysterious when you can see the small decisions that make it learn.”</blockquote><p>Build intuition through short lessons, visual experiments, and practical questions—one clear idea at a time.</p><div class="museum-actions"><a class="button" href="#chapter/foundations">Start learning <span>→</span></a><a class="edition" href="#python">Explore Python basics ↗</a></div></div><div class="editorial-art" aria-hidden="true"><div class="art-orbit orbit-one"></div><div class="art-orbit orbit-two"></div><div class="art-sun">AI</div><span class="art-note note-one">curiosity</span><span class="art-note note-two">pattern</span><span class="art-note note-three">practice</span></div></section>`;
+  return `<section class="editorial-hero" aria-labelledby="editorial-title"><div class="editorial-copy"><span class="section-kicker">AILY · A PRACTICAL AI LEARNING SPACE</span><h1 id="editorial-title">Learn the pattern<br>behind the <em>magic.</em></h1><blockquote>“AI becomes less mysterious when you can see the small decisions that make it learn.”</blockquote><p>Build intuition through short lessons, visual experiments, and practical questions—one clear idea at a time.</p><div class="museum-actions"><a class="button" href="#start">Start learning <span>→</span></a><a class="edition" href="#python">Explore Python basics ↗</a></div></div><div class="editorial-art" aria-hidden="true"><div class="art-orbit orbit-one"></div><div class="art-orbit orbit-two"></div><div class="art-sun">AI</div><span class="art-note note-one">curiosity</span><span class="art-note note-two">pattern</span><span class="art-note note-three">practice</span></div></section>`;
 }
 
 function renderStoryDetail(stage){
@@ -986,6 +986,41 @@ function renderChapterLabPrep(c){
   return `<section class="lab-prep-card"><div><span class="section-kicker">LAB PREP · ${esc(support.lab.toUpperCase())}</span><h2>Before you open the lab</h2><p>${esc(support.goal)}</p></div><div class="lab-prep-steps">${support.steps.map((step,index)=>`<div><span>${index+1}</span><p>${esc(step)}</p></div>`).join('')}</div><div class="lab-prep-hint"><strong>How to approach it</strong><p>${esc(support.hint)}</p></div></section>`;
 }
 
+function renderBeginnerNotes(c){
+  const b=c.beginner;
+  if(!b) return '';
+  return `<section class="beginner-notes" aria-label="Chapter introduction"><span class="section-kicker">IN PLAIN LANGUAGE</span><p class="beginner-summary">${esc(b.plain)}</p><p><strong>Before you start:</strong> ${esc(b.prerequisite)}</p><dl class="beginner-terms">${b.terms.map(([term,meaning])=>`<div><dt>${esc(term)}</dt><dd>${esc(meaning)}</dd></div>`).join('')}</dl><p class="note">New to AI? <a href="#start">Start from zero →</a> · Code is optional; you can go straight to the activity and quiz.</p></section>`;
+}
+
+function renderResources(track,chapterId){
+  const items=track==='ML Algorithms' ? [
+    ['ml_beginner','Beginner explanation','A short conceptual introduction. No coding required.'],
+    ['prework','Before you code','Check the Python and maths background needed for the longer course.'],
+    ['course','Go deeper','A full course with exercises. Python and basic algebra are recommended.']
+  ] : [
+    ['prompting','Try a clearer prompt','Read the examples after the prompting lesson. API code is optional.'],
+    ['llm','Go deeper: language models','Technical reading after neural networks and embeddings; not a first lesson.'],
+    ['agents','Go deeper: agents','Read after the agent lesson. Familiarity with APIs and software workflows helps.']
+  ];
+  if(chapterId==='embeddings') items[1]=['embedding','Go deeper: embeddings','Technical lesson with exercises. Read after the introduction to vectors.'];
+  if(chapterId==='generative') items[1]=['rag','Go deeper: RAG','An architecture guide after this lesson. Some examples discuss vendor tools.'];
+  return `<section class="optional-resources"><h2>Explore further, when you’re ready</h2><p>These readings are optional. You can learn the core ideas and practise here in Aily.</p><div class="cards">${items.map(([id,label,description])=>{const r=catalog.refs[id];return `<a class="card" href="${esc(r[1])}" target="_blank" rel="noopener noreferrer"><span class="section-kicker">${esc(label)}</span><h3>${esc(r[0])} ↗</h3><p>${esc(description)}</p><span class="note">External reading · opens a new tab</span></a>`;}).join('')}</div></section>`;
+}
+
+function startFromZero(){
+  const ideas=[
+    ['AI','The broad field','AI is a broad name for systems that perform tasks such as recognizing patterns, generating language, or planning. Machine learning is one way to build AI.','A parcel app can use AI to help estimate and explain a delivery.'],
+    ['Machine learning','Learn from examples','A model learns patterns from past examples and applies them to new inputs. Its prediction can be wrong.','Use distance and past delivery times to estimate when a new parcel will arrive.'],
+    ['Generative AI','Create content','A generative model produces text, images, or other content from learned patterns and the context it receives. Modern generative AI uses machine learning.','Draft a friendly explanation of a delay using the tracking information.'],
+    ['An AI agent','Use tools to take steps','An agent system can let a model choose a tool, inspect its result, and decide what to do next. It needs permissions and stopping limits.','Look up tracking details, draft an update, then request approval before sending it.']
+  ];
+  app.innerHTML=`<span class="section-kicker">START FROM ZERO · ABOUT 5 MINUTES</span><h1>AI, without the assumed knowledge</h1><p>No coding needed. Follow one parcel to see how the ideas connect.</p><div class="beginner-map">${ideas.map(([name,label,body,example],i)=>`<article class="lesson"><span class="section-kicker">0${i+1} · ${label}</span><h2>${name}</h2><p>${body}</p><div class="exercise">${example}</div></article>`).join('')}</div><section class="lesson"><h2>Try one small question</h2><p>An app writes a friendly message explaining a parcel’s delay. Which capability is doing the writing?</p><div class="choices">${['Machine learning that predicts arrival time','Generative AI that creates text','A permission check before sending'].map((label,i)=>`<button class="choice" data-start-answer="${i}">${label}</button>`).join('')}</div><p id="start-feedback" class="feedback" role="status"></p></section><section class="lesson"><h2>Your first learning steps</h2><p>Start with the foundations, then choose a direction. You do not need to finish every ML algorithm before exploring generative AI.</p><ol class="beginner-path"><li><a href="#chapter/foundations">Meet Machine Learning</a> — learn inputs, models, and predictions.</li><li><a href="#chapter/evaluation">Evaluation &amp; Overfitting</a> — understand why testing matters.</li><li><a href="#chapter/prompting">Generative AI &amp; Clear Prompts</a> — practise a specific request.</li><li><a href="#chapter/embeddings">Embeddings</a> → <a href="#chapter/generative">RAG</a> → <a href="#chapter/agents">Agents</a> — search, answer with evidence, then use tools.</li></ol><p>Explore <a href="#learn">regression, trees, and other ML methods</a> when you want to understand prediction in more detail. Fine-tuning and boosting can wait.</p><a class="button" href="#chapter/foundations">Start the first lesson →</a></section>`;
+  document.querySelectorAll('[data-start-answer]').forEach(button=>button.onclick=()=>{
+    document.querySelectorAll('[data-start-answer]').forEach(b=>b.classList.toggle('selected',b===button));
+    document.getElementById('start-feedback').textContent=button.dataset.startAnswer==='1'?'Correct. Generative AI drafts the text. A separate prediction model might estimate arrival time, and the application checks permission before sending.':'Try again: focus on creating the message, rather than predicting the time or authorizing an action.';
+  });
+}
+
 function renderLearningCompass(next,completedCount){
   const support=chapterSupport[next.id]||{time:'20 min',lab:'Practice Lab'};
   return `<section class="learning-compass"><div><span class="section-kicker">YOUR NEXT BEST STEP</span><h2>${completedCount?'Continue where you left off':'Start here: build the foundation'}</h2><p>${completedCount?`Pick up with <strong>${esc(next.title)}</strong> and keep your momentum.`:`Begin with <strong>${esc(next.title)}</strong>. It gives you the vocabulary needed for the first labs.`}</p><div class="compass-meta"><span>◷ ${support.time}</span><span>🧪 Then: ${esc(support.lab)}</span></div><a class="button" href="#chapter/${next.id}">${completedCount?'Continue chapter':'Start first lesson'} →</a></div><div class="compass-progress"><strong>${completedCount} / ${catalog.chapters.length}</strong><span>chapters complete</span><div><i style="width:${completedCount/catalog.chapters.length*100}%"></i></div></div></section>`;
@@ -998,6 +1033,8 @@ home=function(){
   app.innerHTML=`
     <!-- Editorial hero -->
     ${renderEditorialHero()}
+
+    <section class="beginner-entry"><div><strong>Never studied AI before?</strong><p>Meet AI, machine learning, generative AI, and agents with one everyday example.</p></div><a class="button secondary" href="#start">Start from zero →</a></section>
 
     <!-- Clear five-step AI learning guide -->
     ${renderLearningStory()}
@@ -1017,7 +1054,7 @@ home=function(){
           </div>
           <span style="font-size:11px;font-family:'IBM Plex Mono',monospace;color:var(--text-sub);letter-spacing:1px;font-weight:600;margin-bottom:6px;display:block">UNDERSTAND</span>
           <h3>Core Curriculum</h3>
-          <p>Dual tracks across Classical ML Algorithms and Modern GenAI & Agentic systems — each with code, analogies, and quizzes.</p>
+          <p>Learn how models predict, how AI generates content, and how agents use tools. Start with plain-language explanations; explore code when you’re ready.</p>
           <div class="step-meta">${n > 0 ? `${n} / ${catalog.chapters.length} chapters complete` : `Start with: ${next.title}`}</div>
           <a class="button step-btn" href="#learn">Explore Chapters ➔</a>
         </div>
@@ -1072,14 +1109,15 @@ function renderTrackPage(activeTrack){
     <div class="page-heading">
       <div>
         <span class="section-kicker">STRUCTURED CURRICULUM</span>
-        <h1>${activeTrack==='ML Algorithms'?'Machine Learning Algorithms Suite':'GenAI &amp; Agentic AI Suite'}</h1>
+        <h1>${activeTrack==='ML Algorithms'?'Learn Machine Learning':'Learn Generative AI &amp; Agents'}</h1>
       </div>
       <a class="edition" href="#home">CAREER ROADMAP ↗</a>
     </div>
     <p>${activeTrack==='ML Algorithms'
-      ?'The classic, high-performance algorithms for tabular data, forecasting, and classification. Master the foundations of ML engineering.'
-      :'The 2026 industry frontier: Prompt Engineering, Embeddings, Vector Search, RAG Architecture, and Autonomous Agents with tool use.'}
+      ?'Learn how models use examples to predict numbers, choose categories, and find groups. Begin with Meet Machine Learning; the code can wait.'
+      :'Start with clear prompts, then explore meaning-based search, answers supported by documents, and agents that use tools. Leave fine-tuning for later.'}
     </p>
+    <section class="beginner-entry"><div><strong>New here?</strong><p>Take the five-minute introduction first. Each chapter includes key words and a no-code activity.</p></div><a class="button secondary" href="#start">Start from zero →</a></section>
 
     <div class="track-tabs">
       <button class="track-tab ${activeTrack==='ML Algorithms'?'active':''}" onclick="location.hash='#learn'">▤ ML Algorithms (${mlChapters.length})</button>
@@ -1090,15 +1128,8 @@ function renderTrackPage(activeTrack){
       ${chapterCards(activeList)}
     </div>
 
-    <div class="lesson" style="margin-top:30px">
-      <h2>Need syntax help?</h2>
-      <p>Refresh arrays, broadcasting, and DataFrames before jumping in.</p>
-      <div style="margin-top:12px">
-        <a class="w3-chip" href="https://www.w3schools.com/python/python_ml_getting_started.asp" target="_blank" rel="noopener noreferrer"><span class="w3-badge">W3</span> W3Schools ML Intro ↗</a>
-        <a class="w3-chip" href="https://www.w3schools.com/python/numpy/default.asp" target="_blank" rel="noopener noreferrer"><span class="w3-badge">W3</span> W3Schools NumPy ↗</a>
-        <a class="button secondary" href="#python" style="display:inline-block;padding:7px 14px;font-size:12px">All Python Cheatsheets →</a>
-      </div>
-    </div>
+    ${renderResources(activeTrack)}
+    <p class="note">Ready for code? <a href="#python">Explore Python basics →</a></p>
   `;
 }
 
@@ -1156,7 +1187,7 @@ chapter=function(id){
         ${analogy ? `
         <!-- CS Analogy -->
         <div class="concept-step-analogy">
-          <strong>💡 CS MENTAL MODEL</strong>
+          <strong>💡 ANOTHER WAY TO THINK ABOUT IT</strong>
           <p>${esc(analogy)}</p>
         </div>` : ''}
 
@@ -1164,7 +1195,7 @@ chapter=function(id){
         <div class="concept-step-nav">
           <div style="display:flex;align-items:center;gap:12px">
             <button class="concept-step-btn secondary" id="concept-prev-${i}" ${i===0?'disabled':''}>← Back</button>
-            <button class="concept-step-btn" id="concept-next-${i}">${i===c.sections.length-1?'Go to Code Blueprint ➔':'Next Concept ➔'}</button>
+            <button class="concept-step-btn" id="concept-next-${i}">${i===c.sections.length-1?'Try a small activity ➔':'Next Concept ➔'}</button>
           </div>
           <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px">
             <span class="concept-step-counter">${i+1} / ${c.sections.length}</span>
@@ -1218,7 +1249,7 @@ chapter=function(id){
       </div>
       <div class="chapter-stage" data-stage="code" id="stage-tab-code">
         <span class="chapter-stage-icon">⌨️</span>
-        <span>Code</span>
+        <span>Code (optional)</span>
         <span class="chapter-stage-num">02</span>
       </div>
       <div class="chapter-stage" data-stage="try" id="stage-tab-try">
@@ -1239,12 +1270,13 @@ chapter=function(id){
         <p class="section-kicker">${esc(c.track.toUpperCase())} · CHAPTER ${chapterNum}</p>
         <h1>${esc(c.title)}</h1>
       </div>
-      <span class="edition">◷ ${esc(support.time)} · ${esc(support.lab)}</span>
+      <span class="edition">◷ ${esc(support.time)} · ${c.track==='GenAI & Agents'?'No-code activity':esc(gameLink(c.game).title)}</span>
     </div>
     <p style="margin-bottom:24px">${esc(c.summary)}</p>
 
     <!-- STAGE 1: READ — Concept Step-Through -->
     <div id="stage-read" class="stage-panel">
+      ${renderBeginnerNotes(c)}
       ${conceptsHtml}
     </div>
 
@@ -1252,14 +1284,15 @@ chapter=function(id){
     <div id="stage-code" class="stage-panel" style="display:none">
       <div class="concept-step-card" style="min-height:auto">
         <span class="concept-step-eyebrow">STAGE 02 · PRACTICAL PYTHON</span>
-        <h2 class="concept-step-title" style="font-size:22px">The Code Blueprint</h2>
+        <h2 class="concept-step-title" style="font-size:22px">Explore the code</h2>
+        <p>Optional: read this after the concepts. Some examples illustrate a workflow and require libraries or additional functions to run. <a href="#python">Review Python basics →</a></p>
         <pre style="margin:0 0 18px"><code>${esc(c.example)}</code></pre>
         <div class="scenario-box">
-          <strong>REAL-WORLD ENGINEERING SCENARIO</strong>
+          <strong>THINK IT THROUGH</strong>
           <p>${esc(c.exercise)}</p>
         </div>
         <details class="exercise" style="margin-top:14px">
-          <summary style="cursor:pointer;font-weight:600">Reveal Senior Engineer's Takeaway</summary>
+          <summary style="cursor:pointer;font-weight:600">See an explanation</summary>
           <p style="margin-top:10px">${esc(c.answer)}</p>
         </details>
         <div class="concept-step-nav" style="margin-top:24px">
@@ -1271,6 +1304,8 @@ chapter=function(id){
 
     <!-- STAGE 3: TRY IT — Experiment Link -->
     <div id="stage-try" class="stage-panel" style="display:none">
+      ${c.beginner?`<section class="lesson"><span class="section-kicker">NO CODE NEEDED</span><h2>Try it in your own words</h2><p>${esc(c.beginner.activity)}</p><details><summary>Compare your answer</summary><p>${esc(c.beginner.answer)}</p></details><button class="button" style="margin-top:18px" onclick="document.getElementById('stage-tab-quiz').click()">Ready for the quiz →</button></section>`:''}
+      ${c.track==='ML Algorithms'?`
       ${renderChapterLabPrep(c)}
       <div class="concept-step-card" style="min-height:auto;text-align:center;align-items:center;padding:48px 40px">
         <span style="font-size:52px;margin-bottom:16px;display:block">🧪</span>
@@ -1284,6 +1319,7 @@ chapter=function(id){
           <button class="concept-step-btn" onclick="document.getElementById('stage-tab-quiz').click()">Take the Quiz ➔</button>
         </div>
       </div>
+      `:`<p class="note">Want the technical example? <button class="button secondary" onclick="document.getElementById('stage-tab-code').click()">Explore optional code</button></p>`}
     </div>
 
     <!-- STAGE 4: QUIZ -->
@@ -1312,6 +1348,7 @@ chapter=function(id){
         ${next?`<a class="button" href="#chapter/${next.id}" style="font-size:13px">Next Chapter ➔</a>`:`<a class="button" href="#acred" style="font-size:13px;background:linear-gradient(135deg,#d97706,#f59e0b);color:#1a1035">View AI Acred 🏅</a>`}
       </div>
     </div>
+    ${renderResources(c.track,c.id)}
   `;
 
   // ── Wire stage tab switching ──────────────────────────
@@ -1352,7 +1389,7 @@ chapter=function(id){
     const nextBtn = document.getElementById('concept-next-'+i);
     const prevBtn = document.getElementById('concept-prev-'+i);
     if(nextBtn) nextBtn.onclick = () => {
-      if(i===c.sections.length-1) switchStage('code');
+      if(i===c.sections.length-1) switchStage('try');
       else showConcept(i+1);
     };
     if(prevBtn) prevBtn.onclick = () => showConcept(i-1);
@@ -2380,6 +2417,7 @@ route=function(){
   if(!catalog) return;
   const [page, id] = (location.hash.slice(1)||'home').split('/');
   const names = {
+    start: 'Start from zero',
     home: 'Overview & Roadmap',
     learn: 'ML Algorithms',
     genai: 'GenAI & Agents',
@@ -2408,6 +2446,7 @@ route=function(){
   });
 
   const routes = {
+    start: startFromZero,
     home,
     learn,
     genai,

@@ -2338,6 +2338,34 @@ button, .button, .edition, .track-tab, .role-btn, .arcade-cat-pill { touch-actio
 /* ── Mobile drawer navigation and compact opening tour ─────────────────── */
 .mobile-nav-toggle, .mobile-nav-backdrop { display: none; }
 
+/* Beginner guidance uses the same lesson surfaces as the main curriculum. */
+.beginner-entry { display:flex; align-items:center; justify-content:space-between; gap:20px; padding:22px 24px; margin:24px 0; border:1px solid #d8d2ff; border-radius:14px; background:#f5f2ff; }
+.beginner-entry strong { font-size:18px; color:var(--text-main); }
+.beginner-entry p { margin:5px 0 0; font-size:14px; }
+.beginner-entry .button { flex-shrink:0; }
+.beginner-map { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; margin:24px 0; }
+.beginner-map .lesson { margin:0; }
+.beginner-map h2 { margin-top:10px; }
+.beginner-notes { padding:22px; margin-bottom:22px; border:1px solid #d8d2ff; border-radius:14px; background:#faf9ff; }
+.beginner-notes .beginner-summary { font-size:19px; color:var(--text-main); margin:8px 0 12px; }
+.beginner-terms { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; margin:18px 0; }
+.beginner-terms dt { font-weight:700; color:var(--text-main); margin-bottom:5px; }
+.beginner-terms dd { margin:0; font-size:14px; line-height:1.6; color:var(--text-sub); }
+.beginner-path { padding-left:23px; line-height:1.7; }
+.beginner-path li { padding:6px 0; }
+.beginner-path a,.beginner-notes a { color:var(--purple); text-decoration:underline; text-underline-offset:3px; }
+.optional-resources { margin-top:32px; padding-top:22px; border-top:1px solid var(--line); }
+.optional-resources .card { min-width:0; overflow-wrap:anywhere; }
+.optional-resources .card p { margin-bottom:12px; }
+@media (max-width:640px) {
+  .beginner-entry { align-items:flex-start; flex-direction:column; padding:18px; gap:14px; }
+  .beginner-map,.beginner-terms { grid-template-columns:1fr; }
+  .beginner-notes { padding:18px; }
+  .chapter-stage { min-width:0; padding:9px 4px; min-height:44px; }
+  .chapter-stage-num,.chapter-stage-icon { display:none; }
+  .chapter-stage > span:not(.chapter-stage-icon):not(.chapter-stage-num) { white-space:normal; }
+}
+
 /* ── Guided path and chapter-to-lab learning support ───────────────────── */
 .learning-compass { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:24px; align-items:center; margin:26px 0 32px; padding:26px 28px; border:1px solid #d8d2ff; border-radius:18px; background:linear-gradient(135deg,#fbfaff,#f1f7ff); }.learning-compass h2 { margin:5px 0 7px; font-size:25px; }.learning-compass p { margin:0 0 14px; }.compass-meta { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:17px; }.compass-meta span { padding:5px 9px; border-radius:999px; background:#fff; border:1px solid #e4e3ee; color:#4b5563; font:600 11px 'IBM Plex Mono',monospace; }.compass-progress { min-width:150px; padding:14px 16px; border-radius:14px; background:#24203f; color:#fff; text-align:center; }.compass-progress strong { display:block; font-size:24px; }.compass-progress span { color:#c8c2ed; font-size:11px; }.compass-progress div { height:7px; overflow:hidden; margin-top:11px; border-radius:9px; background:#4b466d; }.compass-progress i { display:block; height:100%; border-radius:9px; background:#c4f46b; }
 .lab-prep-card { display:grid; grid-template-columns:minmax(0,1.1fr) minmax(0,1fr); gap:18px; margin:0 0 18px; padding:22px; border:1px solid #bce2f7; border-radius:15px; background:linear-gradient(135deg,#f4fbff,#fff); }.lab-prep-card h2 { margin:5px 0 7px; font-size:22px; }.lab-prep-card > div > p { margin:0; }.lab-prep-steps { display:grid; gap:8px; }.lab-prep-steps > div { display:flex; gap:9px; align-items:flex-start; }.lab-prep-steps span { display:grid; flex:0 0 23px; width:23px; height:23px; place-items:center; border-radius:50%; background:#dff3ff; color:#0369a1; font:700 11px 'IBM Plex Mono',monospace; }.lab-prep-steps p { margin:2px 0 0; font-size:13px; line-height:1.45; }.lab-prep-hint { grid-column:1 / -1; padding:12px 14px; border-left:3px solid #38bdf8; border-radius:0 9px 9px 0; background:#eff9ff; }.lab-prep-hint strong { color:#0369a1; font-size:11px; letter-spacing:.06em; text-transform:uppercase; }.lab-prep-hint p { margin:4px 0 0; font-size:13px; }

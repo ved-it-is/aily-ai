@@ -1,4 +1,5 @@
 import fs from 'node:fs';import path from 'node:path';
+import './create-course.mjs';
 const assets={};
 function readDist(dir, prefix=''){
   for(const name of fs.readdirSync(dir)){
@@ -30,4 +31,3 @@ if (sbUrl && sbKey) {
 }
 
 console.log('Built Aily Worker, '+Object.keys(assets).length+' assets, '+ids.length+' progress activities.');
-
